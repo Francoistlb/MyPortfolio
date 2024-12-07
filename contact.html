@@ -1,0 +1,59 @@
+<div class="pt-24 pb-12 px-96 h-full bg-[url('/assets/image/image_fond.jpg')] bg-cover">
+    <div class="flex flex-col h-full w-full justify-center items-center">
+        <div class="flex flex-col gap-5 h-full w-full"> 
+            <div class=" h-[50%] flex justify-center items-center">
+                <div class="bgcase">
+                    <iframe src="https://giphy.com/embed/Y2prQiIhEM5ZGlehO7" width="150" height="150" class="rounded-full" frameBorder="0" allowFullScreen></iframe>
+                </div>
+            </div>
+
+            <div class="h-[30%] flex flex-row gap-5">
+                <div class="w-[60%] flex flex-col justify-between gap-2 " >
+                    <div id="email" class="bgcase open flex flex-row justify-start items-center gap-5  h-[50%]" onclick="copyEmail(event)">
+                        <img src="assets/icon_contact/contact.svg" alt="">
+                        <p class="contact"> francoistalaban@gmail.com </p>
+                    </div>
+                    <div class="bgcase open flex flex-row justify-start items-center gap-5 h-[50%]" onclick="linkedin()" >
+                        <img src="assets/icon_contact/linkedin.svg" alt="">
+                        <p class="contact"> LinkedIn </p>
+                    </div>
+                </div>
+                <div class="bgcase w-[40%] flex flex-con justify-center items-center py-1 gap-1">
+                    <img src="assets/icon_contact/phone.svg" alt="">
+                    <p class="contact"> +33 07 80 44 35 22 </p>
+                </div>
+            </div >
+
+            <div  class="bgcase h-[20%]">
+
+            </div>
+
+        </div>
+
+        <!-- Conteneur pour le message "Copié" -->
+        <script src="/js/email.js"></script>
+        <div id="copy-message" class="hidden absolute text-white px-4 py-2 rounded-full w-fit bgcase">
+            <p> Copié ! </p>
+        </div>
+
+        <!-- Menu -->
+        <div class="menu flex flex-row justify-center gap-5 p-2 w-fit">
+            <div id="menu-home" class="menu-btn"> 
+                <img src="assets/icon_design/home.svg" alt="" >
+                <p class="menu-text"> Accueil </p>
+            </div>
+            <div id="menu-projects" class="menu-btn"> 
+                <img src="assets/icon_design/project.svg" alt="" >
+                <p  class="menu-text"> Projets </p>
+            </div>
+            <div id="menu-about" class="menu-btn"> 
+                <img src="assets/icon_design/profil.svg" alt="" >
+                <p  class="menu-text"> Profil </p>
+            </div>
+            <div id="menu-contact" class="menu-btn border-solid border-white border-2" > 
+                <img src="assets/icon_design/form.svg" alt="" >
+                <p  class="menu-text"> Contact </p>
+            </div> 
+        </div>
+    </div>
+</div>
