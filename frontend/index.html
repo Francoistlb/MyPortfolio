@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> François Talaban </title>
+    
+    <!-- css -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link  href="/css/style.css" rel="stylesheet">
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@100;400;500;800;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+</head>
+<body class="text-white h-screen">
+    <div id="dynamic-content" class="h-full w-full bg-[url('/assets/image/image_fond.jpg')] bg-cover">
+        <!-- Modale de bienvenue -->
+        <div id="welcome-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50">
+            <div id="welcome-div" class="bgcase shadow-lg text-center w-[500px] p-7 opacity-0 scale-50 transform transition-all duration-500 ease-out">
+                <h1 class="text-3xl font-bold mb-4">Bienvenue </h1>
+                <h2 class="text-xl mb-6">François Talaban</h2>
+                <button id="visit-button" class="visite text-white px-4 py-2 bg-black rounded-lg transition">
+                    Visiter
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="/js/loadcontent.js"></script>  
+    <script src="/js/loadhome.js"></script> 
+    <script src="/js/loadlogin.js"></script> 
+    <script src="/js/email.js"></script>
+    <script src="/js/zoom-in.js"></script> 
+    <script src="/js/fade.js"></script> 
+</body>
+</html>

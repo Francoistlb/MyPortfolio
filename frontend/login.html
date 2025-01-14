@@ -1,0 +1,19 @@
+<div class="h-full w-full bg-[url('/assets/image/image_fond.jpg')] bg-cover">
+    <div id="login-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50" >
+        <div id="login-dive" class="bgcase shadow-lg text-center w-[800px] p-7 opacity-1 scale-50 transform transition-all duration-500 ease-out">
+            <h1 class="text-4xl font-bold mb-4">Espace administrateur</h1> <br>
+            <form action="http://localhost:8081/index.php" method="post">
+                <label class="text-3xl font-bold" for="name">Login</label><br><br>
+                <input class="text-3xl text-black" type="text" id="name" name="user_name"><br><br>
+                <label class="text-3xl font-bold" for="password">Mot de passe</label><br><br>
+                <input class="text-3xl text-black" type="password" id="password" name="user_password"><br><br>
+                <button id="config" type="submit" class="visite text-2xl text-white px-4 py-2 bg-black rounded-lg transition">
+                    Se connecter
+                </button>
+                <button id="backhome" type="button" class="visite backhome text-2xl text-white px-4 py-2 bg-black rounded-lg transition ml-4">
+                    Retour
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
