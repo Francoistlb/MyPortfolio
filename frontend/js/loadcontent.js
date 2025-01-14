@@ -4,10 +4,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Ajouter un événement à tous les éléments ayant un ID spécifique
     document.addEventListener('click', function (event) {
-        const target = event.target.closest('.open') || event.target.closest('.menu-btn'); // Vérifie si un élément parent a la classe "open"
+        const target = event.target.closest('.open') || event.target.closest('.menu-btn') || event.target.closest('.config') || event.target.closest('.backhome'); // Vérifie si un élément parent a la classe "open"
         if (!target) return;
 
         const id = target.id; // Récupérer l'ID de l'élément cliqué
+        console.log('Élément cliqué :', id);
         let pageToLoad = '';
 
         // Définir quelle page charger en fonction de l'ID
@@ -31,7 +32,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 pageToLoad = 'projects.html';
                 break;
             case 'menu-home':
-                pageToLoad = 'index.html';
+                pageToLoad = 'home.html';
+                break;
+            case 'config':
+                pageToLoad = 'login.html';
+                break;
+            case 'backhome':
+                pageToLoad = 'home.html';
                 break;
             default:
                 console.warn('Aucune page définie pour cet ID:', id);

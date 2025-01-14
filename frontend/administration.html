@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> François Talaban </title>
+    
+    <!-- css -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link  href="/css/style.css" rel="stylesheet">
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@100;400;500;800;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+</head>
+<body class="text-white h-screen">
+    <div class="h-full w-full bg-[url('/assets/image/image_fond.jpg')] bg-cover">
+        <div class="py-12 px-24 h-full"> 
+        <div class="grid grid-cols-4 gap-5 h-full w-full "> 
+            <div class="flex flex-col gap-5 h-full">
+                <div class="bgcase h-[30%]">
+                    <div class="flex justify-end">
+                        <image src="assets/icon_design/cible.svg" alt="" class="h-6 w-6"/>
+                    </div>
+                    <div>
+                        <p class="text-[20px]"> <strong> Développeur web  </strong> <br> en alternance <br> 1 semaine / 2 semaine </p>                                                 
+                    </div>
+                </div>
+                <div id="about" class="bgcase open h-[55%] ">
+                    <div class="flex justify-items-center justify-between">
+                        <h2> A mon sujet </h2>
+                        <img src="assets/icon_design/open.svg" alt="" class="h-6 w-6">
+                    </div>
+                    <div>
+                        <p> Étudiant, apprentis en étude dans le domaine de l'informatique et de la programmation, je suis motivé par ma quête d'expérience professionnelle  et d'enrichissement personnel. </p>
+                    </div>
+
+                </div>
+                <div class="bgcasecv h-[15%]" onclick="cv()">
+                    <div class="flex justify-end">
+                        <image src="assets/icon_design/download.svg" alt="" class="h-6 w-6"/>
+                    </div>
+                    <div>
+                        <h1 class="text-[20px] text-black font-bold"> Curriculum Vitae </h1>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-5 h-full">
+
+                <!-- Section prénom -->
+
+                <div class="bgcase h-[20%] flex justify-center items-center">
+                    <h1 class="text-[24px] font-bold"> François Talaban </h1>
+                </div>
+
+                <!-- Section photo profil -->
+
+                <div class="bgcase h-[45%] flex justify-center items-center">
+                    <div class="h-[150px] w-[150px] rounded-full bg-[url('/assets/image/image_profil.png')] bg-cover bg-[10px_0px] "> </div>
+                </div>
+
+                <!-- Section contact -->
+                
+                <div id="contact" class="bgcase open h-[35%]">
+                    <div class="flex justify-items-center justify-between">
+                        <p class="font-bold"> Vous avez des <br> Question ? </p>
+                        <img src="assets/icon_design/contact.svg" alt="" class="h-6 w-6">
+                    </div>
+                    <div>
+                        <h1 class="text-[20px]" > Me <strong> contacter </strong> </h1>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="flex flex-col gap-5 h-full">
+                
+                <!-- Section projets -->
+
+                <div id="projects" class="bgcase open h-[55%] flex justify-start">
+                    <div id="projets" class="flex justify-items-center justify-between">
+                        <h2> Mes projets </h2>
+                        <img src="assets/icon_design/open.svg" alt="" class="h-6 w-6">
+                    </div>
+
+                    <div class="card rounded-md flex justify-items-center justify-between p-2">
+                        <div class="flex justify-items-center items-center" > 
+                            <img class="mr-5" src="assets/icon_projects/portfolio.svg" alt="">
+                            <p> <strong> Portfolio </strong>  </p>
+                        </div>
+                        <img src="assets/icon_design/fleche.svg" alt="">
+                    </div>
+
+                </div>
+                  
+                <!-- Section compétences -->
+
+                <div class="bgcase h-[45%]">
+                    <div id="competences" class="flex justify-center justify-between">
+                        <h2> Mes compétences  </h2>
+                        <img src="assets/icon_design/synergie.svg" alt="" class="h-6 w-6">
+                    </div>
+                    <div class="flex flex-wrap justify-center itmes-center gap-5 p-2">
+                        <image class="h-12 w-12" src="assets/icon_skills/php.svg"> </image>
+                        <image class="h-12 w-12" src="assets/icon_skills/js.svg"> </image>
+                        <image class="h-12 w-12" src="assets/icon_skills/html.svg"> </image>
+                        <image class="h-12 w-12" src="assets/icon_skills/css.svg"> </image>
+                        <image class="h-12 w-12" src="assets/icon_skills/mysql.svg"> </image>
+                        <image class="h-12 w-12" src="assets/icon_skills/symfony.svg"> </image>
+                        <image class="h-12 w-12" src="assets/icon_skills/wp.svg"> </image>
+                        <image class="h-12 w-12" src="assets/icon_skills/android.svg"> </image>    
+                        <image class="h-12 w-12" src="assets/icon_skills/github.svg"> </image>
+                        <image class="h-12 w-12" src="assets/icon_skills/gproject.svg"> </image>
+                        <image class="h-12 w-12" src="assets/icon_skills/figma.svg"> </image>
+                        <image class="h-12 w-12" src="assets/icon_skills/assistance.svg"> </image>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-5 h-full">
+
+                <!-- Section expériences -->
+
+                <div class="bgcase h-[70%]  justify-start">
+                    <div id="competences" class="flex justify-center justify-between mb-[15px]">
+                        <h2> Mes expériences </h2>
+                        <img src="assets/icon_design/experiences.svg" alt="" class="h-6 w-6">
+                    </div>
+
+                    <div class="max-h-[350px] overflow-hidden">
+                        <div class="h-full scrolbar overflow-y-auto">
+                            <div class="rounded-md flex items-stretch">
+                                <div class="flex flex-col w-[15%] justify-center items-center "> 
+                                    <div class="h-1/3"></div>
+                                    <image class="h-1/3 w-7" src="assets/icon_design/row.svg"> </image>
+                                    <div class="h-1/3 flex justify-center items-center">
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                </div>
+                                <div class="list w-[85%] p-2">
+                                    <p class="exp-title"> Bachelor Concepteur Intégrateur DevOps </p>
+                                    <p class="exp-text"> Sept 2023 - Today </p>
+                                    <p class="exp-text"> EPSI TOULOUSE </p>
+                                </div>
+                            </div>
+                            
+                            <div class="rounded-md flex items-stretch">
+                                <div class="flex flex-col w-[15%] justify-center items-center "> 
+                                    <div class="h-2"> 
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                </div>
+                                <div class="w-[85%]"></div>
+                            </div>
+                            <div class="rounded-md flex items-stretch">
+                                <div class="flex flex-col w-[15%] justify-center items-center "> 
+                                    <div class="h-1/3"> 
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                    <image class="h-1/3 w-7" src="assets/icon_design/row.svg"> </image>
+                                    <div class="h-1/3 flex justify-center items-center">
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                </div>
+                                <div class="list w-[85%] p-2">
+                                    <p class="exp-title"> Bachelor Concepteur Intégrateur DevOps </p>
+                                    <p class="exp-text"> Sept 2023 - Today </p>
+                                    <p class="exp-text"> EPSI TOULOUSE </p>
+                                </div>
+                            </div>
+
+                            <div class="rounded-md flex items-stretch">
+                                <div class="flex flex-col w-[15%] justify-center items-center "> 
+                                    <div class="h-2"> 
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                </div>
+                                <div class="w-[85%]"></div>
+                            </div>
+                            <div class="rounded-md flex items-stretch">
+                                <div class="flex flex-col w-[15%] justify-center items-center "> 
+                                    <div class="h-1/3"> 
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                    <image class="h-1/3 w-7" src="assets/icon_design/row.svg"> </image>
+                                    <div class="h-1/3 flex justify-center items-center">
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                </div>
+                                <div class="list w-[85%] p-2">
+                                    <p class="exp-title"> Bachelor Concepteur Intégrateur DevOps </p>
+                                    <p class="exp-text"> Sept 2023 - Today </p>
+                                    <p class="exp-text"> EPSI TOULOUSE </p>
+                                </div>
+                            </div>
+
+                            <div class="rounded-md flex items-stretch">
+                                <div class="flex flex-col w-[15%] justify-center items-center "> 
+                                    <div class="h-2"> 
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                </div>
+                                <div class="w-[85%]"></div>
+                            </div>
+                            <div class="rounded-md flex items-stretch">
+                                <div class="flex flex-col w-[15%] justify-center items-center "> 
+                                    <div class="h-1/3"> 
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                    <image class="h-1/3 w-7" src="assets/icon_design/row.svg"> </image>
+                                    <div class="h-1/3 flex justify-center items-center">
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                </div>
+                                <div class="list w-[85%] p-2">
+                                    <p class="exp-title"> Bachelor Concepteur Intégrateur DevOps </p>
+                                    <p class="exp-text"> Sept 2023 - Today </p>
+                                    <p class="exp-text"> EPSI TOULOUSE </p>
+                                </div>
+                            </div>
+
+                            <div class="rounded-md flex items-stretch">
+                                <div class="flex flex-col w-[15%] justify-center items-center "> 
+                                    <div class="h-2"> 
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                </div>
+                                <div class="w-[85%]"></div>
+                            </div>
+                            <div class="rounded-md flex items-stretch">
+                                <div class="flex flex-col w-[15%] justify-center items-center "> 
+                                    <div class="h-1/3"> 
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                    <image class="h-1/3 w-7" src="assets/icon_design/row.svg"> </image>
+                                    <div class="h-1/3 flex justify-center items-center">
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                </div>
+                                <div class="list w-[85%] p-2">
+                                    <p class="exp-title"> Bachelor Concepteur Intégrateur DevOps </p>
+                                    <p class="exp-text"> Sept 2023 - Today </p>
+                                    <p class="exp-text"> EPSI TOULOUSE </p>
+                                </div>
+                            </div>
+
+                        </div>    
+                    </div>
+                </div>
+
+                 <!-- Section education -->
+                  
+                <div class="bgcase h-[30%] max-h-[30%] justify-start">
+                    <div id="competences" class="flex justify-center justify-between mb-[15px]">
+                        <h2> Mes Diplômes </h2>
+                        <img src="assets/icon_design/school.svg" alt="" class="h-6 w-6">
+                    </div>
+
+                    <div class="max-h-[100px] overflow-hidden">
+                        <div class="h-full scrolbar overflow-y-auto">
+
+                            <div class="rounded-md flex items-stretch">
+                                <div class="flex flex-col w-[15%] justify-center items-center "> 
+                                    <div class="h-1/3"></div>
+                                    <image class="h-1/3 w-7" src="assets/icon_design/row.svg"> </image>
+                                    <div class="h-1/3 flex justify-center items-center">
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                </div>
+                                <div class="list w-[85%] p-2">
+                                    <p class="exp-title"> Bachelor Concepteur Intégrateur DevOps </p>
+                                    <p class="exp-text"> Sept 2023 - Today </p>
+                                    <p class="exp-text"> EPSI TOULOUSE </p>
+                                </div>
+                            </div>
+
+                            <div class="rounded-md flex items-stretch">
+                                <div class="flex flex-col w-[15%] justify-center items-center "> 
+                                    <div class="h-2"> 
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                </div>
+                                <div class="w-[85%]"></div>
+                            </div>
+                            <div class="rounded-md flex items-stretch">
+                                <div class="flex flex-col w-[15%] justify-center items-center "> 
+                                    <div class="h-1/3"> 
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                    <image class="h-1/3 w-7" src="assets/icon_design/row.svg"> </image>
+                                    <div class="h-1/3 flex justify-center items-center">
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                </div>
+                                <div class="list w-[85%] p-2">
+                                    <p class="exp-title"> Bachelor Concepteur Intégrateur DevOps </p>
+                                    <p class="exp-text"> Sept 2023 - Today </p>
+                                    <p class="exp-text"> EPSI TOULOUSE </p>
+                                </div>
+                            </div>
+                            
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="config" class="config"> login </div>
+    </div>
+    
+</div>
+
+    <script src="/js/loadcontent.js"></script>  
+    <script src="/js/loadhome.js"></script> 
+    <script src="/js/loadlogin.js"></script> 
+    <script src="/js/email.js"></script>
+    <script src="/js/zoom-in.js"></script> 
+    <script src="/js/fade.js"></script> 
+</body>
+</html>

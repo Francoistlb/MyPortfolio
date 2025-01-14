@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  # Service pour le frontend avec NGINX
+  frontend:
+    build: ./frontend          # Utilise le Dockerfile dans le dossier frontend
+    container_name: PortfolioV2-frontend
+    volumes:
+    - ./frontend:/usr/share/nginx/html:ro   # Montée du volume pour rendre les fichiers accessibles
+    ports:
+      - "8080:80"              # Mappe le port 8080 local vers le port 80 du conteneur
+
+  # Service pour le backend PHP avec Apache
+  backend:
+    build: ./backend           # Utilise le Dockerfile dans le dossier backend
+    container_name: PortfolioV2-backend
+    volumes:
+      - ./backend:/var/www/html  # Monte les fichiers PHP localement
+    ports:
+      - "8081:80"              # Mappe le port 8081 local vers le port 80 du conteneur
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Service pour la base de données MySQL
+  db:
+    image: mysql:5.7
+    container_name: PortfolioV2-mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: MyportolioV2
+      MYSQL_DATABASE: portfolio
+      MYSQL_USER: Administrateur
+      MYSQL_PASSWORD: MyportolioV2
+    volumes:
+      - db_data:/var/lib/mysql  # Persistance des données MySQL
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "Administrateur", "-pMyportolioV2"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+
+  # Service pour phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: PortfolioV2-phpmyadmin
+    ports:
+      - "8082:80"              # Mappe le port 8082 local vers le port 80 du conteneur
+    environment:
+      PMA_HOST: db                         # Nom du service MySQL (ici 'db')
+      MYSQL_ROOT_PASSWORD: MyportolioV2    # Mot de passe root pour phpMyAdmin
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db_data:                     # Volume pour stocker les données MySQL
