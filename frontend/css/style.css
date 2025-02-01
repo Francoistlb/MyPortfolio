@@ -15,6 +15,17 @@ body {
 
 }
 
+.bgcaseadmin {
+    background-color: rgba(26, 26, 26, 0.9);
+    border-radius: 20px;
+    padding: 15px;
+    display: flex;
+  
+    flex-direction: column;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+}
+
 .card-project {
     background-color: rgba(26, 26, 26, 0.9);
     border-radius: 20px;
@@ -88,6 +99,9 @@ body {
     background-color: rgba(26, 26, 26);
     border-radius: 10px;
     margin-top: 15px;
+    display: flex;
+    align-items: center; /* Centre verticalement */
+    justify-content: space-between; 
 
 }
 
@@ -202,6 +216,13 @@ li {
     background-color: rgba(88, 155, 150);
 }
 
+.out {
+    cursor:pointer;
+    height: 20px;
+    width: 20px;
+  
+}
+
 .button {
     font-family: "Exo 2", sans-serif;
 }
@@ -218,6 +239,30 @@ li {
 
 #dynamic-content {
     transition: opacity 0.1s ease-in-out;
+}
+
+.buttonsadmin {
+    display: flex;
+    gap: auto;
+    justify-content: space-between;
+    align-items: center;
+    justify-items: center;
+   
+    
+}
+.buttonadmin {
+    background-color: gray;
+    color: white;
+    border: none;
+    padding: 3px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size:12px;
+    font-family: "Exo 2", sans-serif;
+}
+.buttonadmin:hover {
+    background-color: darkgray;
+  
 }
 
 .exo-2-tile {

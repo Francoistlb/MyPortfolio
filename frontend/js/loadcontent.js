@@ -4,7 +4,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Ajouter un événement à tous les éléments ayant un ID spécifique
     document.addEventListener('click', function (event) {
-        const target = event.target.closest('.open') || event.target.closest('.menu-btn') || event.target.closest('.config') || event.target.closest('.backhome'); // Vérifie si un élément parent a la classe "open"
+        const target = event.target.closest('.open') || 
+        event.target.closest('.menu-btn') || 
+        event.target.closest('.config') || 
+        event.target.closest('.backhome') ||
+        event.target.closest('.out'); 
         if (!target) return;
 
         const id = target.id; // Récupérer l'ID de l'élément cliqué
@@ -37,6 +41,23 @@ document.addEventListener('DOMContentLoaded', function () {
             case 'config':
                 pageToLoad = 'login.html';
                 break;
+            case 'out':
+                console.log('Déconnexion en cours...');
+                fetch('/index.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'action=logout'
+                })
+                .then(response => {
+                    console.log('Réponse reçue:', response);
+                    window.location.href = '/index.html';
+                })
+                .catch(error => {
+                    console.error('Erreur détaillée:', error);
+                });
+                return;
             case 'backhome':
                 pageToLoad = 'home.html';
                 break;
@@ -45,26 +66,26 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
         }
 
-        // Charger la page via fetch
-        fetch(pageToLoad)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erreur de chargement : ' + response.statusText);
-                }
-                return response.text();
-            })
-            .then(html => {
-                // Insérer le contenu chargé dans le div
-                dynamicContent.innerHTML = html;
-
-               // Appliquer l'animation de transition une fois le contenu chargé
-               setTimeout(() => {
-                dynamicContent.style.opacity = '1';
-            }, 300);  // Petit délai avant de commencer l'animation pour éviter le flash
-            })
-            .catch(error => {
-                console.error('Erreur de chargement dynamique :', error);
-            });
+        // Charger la page via fetch si pageToLoad est défini
+        if (pageToLoad) {
+            fetch(pageToLoad)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erreur de chargement : ' + response.statusText);
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    dynamicContent.innerHTML = html;
+                    // Appliquer l'animation de transition
+                    setTimeout(() => {
+                        dynamicContent.style.opacity = '1';
+                    }, 300);
+                })
+                .catch(error => {
+                    console.error('Erreur de chargement dynamique :', error);
+                });
+        }
     });
 });
 
