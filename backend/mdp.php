@@ -1,6 +1,6 @@
 <?php
 // Connexion à la base de données
-require_once "connexionBdd.php";  // Inclure votre fichier de connexion à la base de données
+require_once __DIR__ . "/controllers/DatabaseConnexionController.php";  // Utilisation de __DIR__
 
 // Définir les valeurs à insérer (vous pouvez remplacer par des variables ou un formulaire selon votre besoin)
 $username = 'Francois';  // Nom d'utilisateur

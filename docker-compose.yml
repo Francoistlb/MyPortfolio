@@ -1,35 +1,35 @@
-version: '3.8'
+version: '3'
 
 services:
-  # Service pour le frontend avec NGINX
+  # Service pour le frontend (avec une image plus légère)
   frontend:
-    build: ./frontend          # Utilise le Dockerfile dans le dossier frontend
+    image: nginx:latest
     container_name: PortfolioV2-frontend
     volumes:
-    - ./frontend:/usr/share/nginx/html:ro   # Montée du volume pour rendre les fichiers accessibles
+      - ./frontend:/usr/share/nginx/html
+      - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
-      - "8080:80"              # Mappe le port 8080 local vers le port 80 du conteneur
+      - "8080:80"
+    networks:
+      - app-network
 
-  # Service pour le backend PHP avec Apache
+  # Service pour le backend
   backend:
-    build: ./backend           # Utilise le Dockerfile dans le dossier backend
+    build: ./backend
     container_name: PortfolioV2-backend
     volumes:
-      - ./backend:/var/www/html  # Monte les fichiers PHP localement
+      - ./backend:/var/www/html
     ports:
-      - "8081:80"              # Mappe le port 8081 local vers le port 80 du conteneur
+      - "8081:80"
     depends_on:
       db:
         condition: service_healthy
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+    networks:
+      - app-network
 
   # Service pour la base de données MySQL
   db:
-    image: mysql:5.7
+    image: mysql:8
     container_name: PortfolioV2-mysql-db
     environment:
       MYSQL_ROOT_PASSWORD: MyportolioV2
@@ -37,26 +37,50 @@ services:
       MYSQL_USER: Administrateur
       MYSQL_PASSWORD: MyportolioV2
     volumes:
-      - db_data:/var/lib/mysql  # Persistance des données MySQL
+      - db_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "Administrateur", "-pMyportolioV2"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pMyportolioV2"]
       interval: 30s
       timeout: 10s
       retries: 5
       start_period: 20s
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
 
   # Service pour phpMyAdmin
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: PortfolioV2-phpmyadmin
     ports:
-      - "8082:80"              # Mappe le port 8082 local vers le port 80 du conteneur
+      - "8082:80"
     environment:
-      PMA_HOST: db                         # Nom du service MySQL (ici 'db')
-      MYSQL_ROOT_PASSWORD: MyportolioV2    # Mot de passe root pour phpMyAdmin
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: MyportolioV2
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - app-network
+
+  # Service nginx (proxy)
+  nginx:
+    image: nginx:latest
+    container_name: PortfolioV2-nginx
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro  # Seulement la config
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
-  db_data:                     # Volume pour stocker les données MySQL
+  db_data:
