@@ -18,28 +18,28 @@ document.addEventListener('DOMContentLoaded', function () {
         // Définir quelle page charger en fonction de l'ID
         switch (id) {
             case 'contact':
-                pageToLoad = 'contact.html';
+                pageToLoad = './components/contact.html';
                 break;
             case 'menu-contact':
-                pageToLoad = 'contact.html';
+                pageToLoad = './components/contact.html';
                 break;
             case 'about':
-                pageToLoad = 'about.html';
+                pageToLoad = './components/about.html';
                 break;
             case 'menu-about':
-                pageToLoad = 'about.html';
+                pageToLoad = './components/about.html';
                 break;
             case 'projects':
-                pageToLoad = 'projects.html';
+                pageToLoad = './components/projects.html';
                 break;
             case 'menu-projects':
-                pageToLoad = 'projects.html';
+                pageToLoad = './components/projects.html';
                 break;
             case 'menu-home':
-                pageToLoad = 'home.html';
+                pageToLoad = './components/home.html';
                 break;
             case 'config':
-                pageToLoad = 'login.html';
+                pageToLoad = './components/login.html';
                 break;
             case 'out':
                 console.log('Déconnexion en cours...');

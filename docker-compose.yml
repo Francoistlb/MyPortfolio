@@ -1,13 +1,12 @@
 version: '3'
 
 services:
-  # Service pour le frontend (avec une image plus légère)
+  # Service pour le frontend (nginx pour servir le frontend uniquemen)
   frontend:
     image: nginx:latest
     container_name: PortfolioV2-frontend
     volumes:
       - ./frontend:/usr/share/nginx/html
-      - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
       - "8080:80"
     networks:
@@ -64,12 +63,12 @@ services:
     networks:
       - app-network
 
-  # Service nginx (proxy)
+  # Service nginx (reverse proxy)
   nginx:
     image: nginx:latest
     container_name: PortfolioV2-nginx
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro  # Seulement la config
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
       - "80:80"
     depends_on:
