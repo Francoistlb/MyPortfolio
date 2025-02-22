@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 500);
 
         // Charger le contenu initial (par exemple "home.html")
-        fetch('home.html')
+        fetch('./components/home.html')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Erreur de chargement : ' + response.statusText);
@@ -31,4 +31,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error('Erreur de chargement dynamique :', error);
             });
     });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const welcomeDiv = document.getElementById('welcome-div');
+    
+    // Ajoutez une petite temporisation pour un effet plus fluide
+    setTimeout(() => {
+        welcomeDiv.classList.remove('opacity-0', 'scale-50');
+        welcomeDiv.classList.add('opacity-100', 'scale-60');
+    }, 100); // Le délai avant que l'animation ne commence (100ms ici)
 });

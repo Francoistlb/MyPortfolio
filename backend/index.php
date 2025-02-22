@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     //  Login controller
     if (!isset($_POST['user_name'])) {
-        header('Location: http://localhost:8080/login.html?error=3');
+        header('Location: http://localhost/login.html?error=3');
         exit();
     }
     else {

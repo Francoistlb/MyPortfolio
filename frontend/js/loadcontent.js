@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 pageToLoad = './components/projects.html';
                 break;
             case 'menu-home':
-                pageToLoad = './components/home.html';
+                pageToLoad = '../components/home.html';
                 break;
             case 'config':
                 pageToLoad = './components/login.html';

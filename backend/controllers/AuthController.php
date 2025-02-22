@@ -26,7 +26,7 @@ class AuthController {
                     'nom' => $user['Login']
                 ];
                 error_log("Redirection vers /administration.html");
-                header('Location: http://localhost:8080/administration.html');
+                header('Location: http://localhost/components/administration.html');
                 exit();
             } else {
                 error_log("Échec de l'authentification");

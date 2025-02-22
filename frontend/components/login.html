@@ -1,20 +1,20 @@
     <div class="h-full w-full bg-[url('/assets/image/image_fond.jpg')] bg-cover">
         <div id="login-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50">
-            <div id="login-dive" class="bgcase shadow-lg text-center w-[800px] p-7 opacity-0 scale-50 transform transition-all duration-500 ease-out">
-                <h1 class="text-4xl font-bold mb-4">Espace administrateur</h1> <br>
+            <div id="login-dive" class="bgcase shadow-lg text-center w-[500px] p-5 transform transition-all duration-500 ease-out" style="opacity: 0; transform: scale(0.95);">
+                <h1 class="text-2xl font-bold mb-4">Espace administrateur</h1>
                 <form id="loginForm" action="/index.php" method="post">
                     <input type="hidden" name="action" value="login">
                     
-                    <label class="text-3xl font-bold" for="name">Login</label><br><br>
-                    <input class="text-3xl text-black" type="text" id="name" name="user_name" required><br><br>
+                    <label class="text-xl font-bold" for="name">Login</label><br>
+                    <input class="text-xl text-black mt-2 mb-4 px-3 py-1 rounded" type="text" id="name" name="user_name" required><br>
                     
-                    <label class="text-3xl font-bold" for="password">Mot de passe</label><br><br>
-                    <input class="text-3xl text-black" type="password" id="password" name="user_password" required><br><br>
+                    <label class="text-xl font-bold" for="password">Mot de passe</label><br>
+                    <input class="text-xl text-black mt-2 mb-4 px-3 py-1 rounded" type="password" id="password" name="user_password" required><br>
                     
-                    <button type="submit" class="visite text-2xl text-white px-4 py-2 bg-black rounded-lg transition">
+                    <button type="submit" class="visite text-lg text-white px-4 py-2 bg-black rounded-lg transition hover:bg-opacity-80">
                         Se connecter
                     </button>
                 </form>
             </div>
         </div>
-    </div>
+    </div>  
