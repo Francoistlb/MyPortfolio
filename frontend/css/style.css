@@ -251,7 +251,7 @@ li {
     
 }
 .buttonadmin {
-    background-color: gray;
+    background-color: rgb(39, 97, 92);
     color: white;
     border: none;
     padding: 3px 18px;
@@ -261,7 +261,7 @@ li {
     font-family: "Exo 2", sans-serif;
 }
 .buttonadmin:hover {
-    background-color: darkgray;
+    background-color: rgb(53, 129, 123);
   
 }
 

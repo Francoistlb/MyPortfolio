@@ -10,10 +10,9 @@ async function submitLoginForm(event) {
     }
     
     try {
-        const response = await fetch('http://localhost:8081/index.php', {
+        const response = await fetch('/index.php', {
             method: 'POST',
             body: formData,
-            mode: 'cors'
         });
 
         const result = await response.json();
