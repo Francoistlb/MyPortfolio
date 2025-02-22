@@ -112,24 +112,46 @@ function initializeModal() {
                 </form>
             `
         },
-
+        veille: {
+            title: 'Modifier la veille',
+            content: `  
+                <form class="flex flex-col gap-4" id="modifData">
+                    <input type="hidden" name="form_id" value="modifData">  
+                    <input type="textarea" placeholder="veille" class="p-2 rounded bg-gray-600 text-white">
+                    <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
+                        Enregistrer
+                    </button>
+                </form>
+            `
+        },
         diplome: {
             title: 'Ajouter un diplôme',
             content: `
                 <form class="flex flex-col gap-4" id="modifData">
-                    <input type="hidden" name="form_id" value="modifData">  
-                    <input type="text" placeholder="Titre du diplôme" name="diplome" class="p-2 rounded bg-gray-600 text-white">
-                    <input type="text" placeholder="Periode (Sept 2000 - Juin 2000)" name="periode" class="p-2 rounded bg-gray-600 text-white">
-                    <input type="text" placeholder="Ecole" name="ecole" class="p-2 rounded bg-gray-600 text-white">
+                    <input type="hidden" name="form_id" value="modifData"> 
+                    <input type="text" placeholder="Titre du diplôme" name="titre_diplome" class="p-2 rounded bg-gray-600 text-white" required>
+                    <input type="text" placeholder="Période (Sept 2023 - Juin 2024)" name="periode_diplome" class="p-2 rounded bg-gray-600 text-white" required>
+                    <input type="text" placeholder="École" name="ecole_diplome" class="p-2 rounded bg-gray-600 text-white" required>
+                    <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
+                        Enregistrer
+                    </button>
+                </form>
+            `
+        }, 
+        experience: {
+            title: 'Ajouter une experience',
+            content: `
+                <form class="flex flex-col gap-4" id="modifData">
+                    <input type="hidden" name="form_id" value="modifData"> 
+                    <input type="text" placeholder="Titre de l'experience" name="titre_experience" class="p-2 rounded bg-gray-600 text-white">
+                    <input type="text" placeholder="Période (Sept 2023 - Juin 2024)" name="periode_experience" class="p-2 rounded bg-gray-600 text-white">
+                    <input type="text" placeholder="Nom de l'entreprise" name="nom_experience" class="p-2 rounded bg-gray-600 text-white">
                     <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
                         Enregistrer
                     </button>
                 </form>
             `
         },  
-
-
-        
         competences: {
             title: 'Modifier les compétences',
             content: `
@@ -142,13 +164,6 @@ function initializeModal() {
                 </form>
             `
         },
-
-
-
-
-
-
-
         projets: {
             title: 'Modifier les projets',
             content: `  
@@ -161,7 +176,6 @@ function initializeModal() {
                 </form>
             `
         },
-        
     };
 
     // Gestionnaire de clic pour les boutons modifier
