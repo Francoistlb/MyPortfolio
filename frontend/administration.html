@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> François Talaban </title>
+    
+    <!-- css -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link  href="/css/style.css" rel="stylesheet">
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@100;400;500;800;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+</head>
+<body class="text-white h-screen">
+    <div class="h-full w-full bg-[url('/assets/image/image_fond.jpg')] bg-cover">
+        <div class="py-12 px-24 h-full"> 
+        <div class="grid grid-cols-4 gap-5 h-full w-full "> 
+            <div class="flex flex-col gap-5 h-full">
+                <div class="bgcase h-[10%] flex flex-row justify-center items-center ">
+                    <h1 class="text-[24px] font-bold mr-2"> Administration </h1>
+                    <img id="out" class="out" src="assets/icon_design/out.svg" alt="">
+                </div>
+                <div class="bgcase h-[90%] flex justify-start">
+                    <div class="flex justify-items-center justify-between">
+                        <h2> INFOS PROFIL </h2>
+                    </div>
+                    
+                 
+                    <p> Target </p>
+                    <div class="buttonsadmin mt-[5px] mb-[5px]">
+                        <button class="buttonadmin">Voir</button>
+                        <button class="buttonadmin">Modifier</button>
+                    </div>
+    
+                    <p> BIO </p>
+                    <div class="buttonsadmin mt-[5px] mb-[5px] ">
+                        <button class="buttonadmin">Voir</button>
+                        <button class="buttonadmin">Modifier</button>
+                    </div>
+
+                    <p> Adresse mail </p>
+                    <div class="buttonsadmin mt-[5px] mb-[5px] ">
+                        <button class="buttonadmin">Voir</button>
+                        <button class="buttonadmin">Modifier</button>
+                    </div>
+
+                    <p> Telephone </p>
+                    <div class="buttonsadmin mt-[5px] mb-[5px] ">
+                        <button class="buttonadmin">Voir</button>
+                        <button class="buttonadmin">Modifier</button>
+                    </div>
+
+                    <p> Age </p>
+                    <div class="buttonsadmin mt-[5px] mb-[5px] ">
+                        <button class="buttonadmin">Voir</button>
+                        <button class="buttonadmin">Modifier</button>
+                    </div>
+
+                    <p> Ville </p>
+                    <div class="buttonsadmin mt-[5px] mb-[5px] ">
+                        <button class="buttonadmin">Voir</button>
+                        <button class="buttonadmin">Modifier</button>
+                    </div>
+
+                    <p> Photo profil </p>
+                    <div class="buttonsadmin mt-[5px] mb-[5px] ">
+                        <button class="buttonadmin">Voir</button>
+                        <button class="buttonadmin">Modifier</button>
+                    </div>
+                
+                    <p> CV pdf </p>
+                    <div class="buttonsadmin mt-[5px] mb-[5px] ">
+                        <button class="buttonadmin">Voir</button>
+                        <button class="buttonadmin">Modifier</button>
+                    </div>
+                    
+                    <!-- Formulaire upload image 
+                    <div> 
+                        <form action="http://localhost:8081/importFiles.php" method="post" enctype="multipart/form-data" class="flex flex-col items-center gap-2">
+                            <p id="selected-image-name">Aucun fichier sélectionné</p>
+                    
+                            <label for="profile_image" class="cursor-pointer bg-white/20 hover:bg-white/30 px-3 py-1 rounded">
+                                Changer l'image
+                            </label>
+                            <input type="file" id="profile_image" name="profile_image" accept="image/*" class="hidden" onchange="updateFileName(this, 'selected-image-name')" onload="loadCurrentFiles()">
+                            <button type="submit" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded">
+                                Envoyer
+                            </button>
+                        </form>
+    
+                     
+                        <form action="http://localhost:8081/importFiles.php" method="post" enctype="multipart/form-data" class="flex flex-col items-center gap-2">
+                            <p id="selected-cv-name">Aucun fichier sélectionné</p>
+                            <label for="cv_file" class="cursor-pointer bg-white/20 hover:bg-white/30 px-3 py-1 rounded">
+                                Upload CV (PDF)
+                            </label>
+                            <input type="file" id="cv_file" name="cv_file" accept=".pdf" class="hidden" onchange="updateFileName(this, 'selected-cv-name')">
+                            <button type="submit" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded">
+                                Envoyer
+                            </button>
+                        </form> 
+                    </div> -->
+
+                </div>
+                
+            </div>
+
+            <div class="flex flex-col gap-5 h-full">
+
+               
+                <!-- Section contact -->
+                
+                <div id="contact" class="bgcase h-[80%] flex justify-start">
+                    <div id="projets" class="flex justify-items-center justify-between">
+                        <h2> Cométpences </h2>
+                       
+                    </div>
+                    <div class="buttonsadmin  mt-[10px]">
+                        <button class="buttonadmin">Voir</button>
+                        <button class="buttonadmin">Modifier</button>
+                    </div>
+                
+            </div>
+
+            <div id="contact" class="bgcase h-[20%]     justify-start">
+                <div id="projets" class="flex justify-items-center justify-between">
+                    <h2> Mes projets </h2>
+                </div>
+            <div class="buttonsadmin mt-[10px]">
+                <button class="buttonadmin">Voir</button>
+                <button class="buttonadmin">Modifier</button>
+            </div>
+            </div>
+        </div>
+            
+            <div class="flex flex-col gap-5 h-full">
+                
+                <!-- Section projets -->
+
+                <div id="projects" class="bgcase  h-[100%] flex justify-start">
+                    <div id="projets" class="flex justify-items-center justify-between">
+                        <h2> Mes projets </h2>
+                    </div>
+                    <div class="buttonsadmin mt-[10px]">
+                        <button class="buttonadmin">Ajouter</button>
+                    </div>
+                    <div class="card rounded-md flex items-center justify-between p-2">
+                        <div class="flex items-center gap-5"> 
+                            <img src="assets/icon_projects/portfolio.svg" alt="">
+                            <p><strong>Portfolio</strong></p>
+                        </div>
+                        <button class="buttonadmin">Modifier</button>
+                    </div>
+                    
+
+                </div>
+                  
+                
+            </div>
+
+            <div class="flex flex-col gap-5 h-full">
+
+                <!-- Section expériences -->
+
+                <div class="bgcase h-[60%]  justify-start">
+                    <div id="competences" class="flex justify-center justify-between">
+                        <h2> Mes expériences </h2>
+                        <img src="assets/icon_design/experiences.svg" alt="" class="h-6 w-6">
+                    </div>
+                    <div class="buttonsadmin mb-[15px]  mt-[10px]">
+                        <button class="buttonadmin">Ajouter</button>
+                        <button class="buttonadmin">Modifier</button>
+                    </div>
+                    <div class="max-h-[350px] overflow-hidden">
+                        <div class="h-full scrolbar overflow-y-auto">
+                           
+                        
+                            <div class="rounded-md flex items-stretch">
+                                <div class="flex flex-col w-[15%] justify-center items-center "> 
+                                    <div class="h-1/3"></div>
+                                    <image class="h-1/3 w-7" src="assets/icon_design/row.svg"> </image>
+                                    <div class="h-1/3 flex justify-center items-center">
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                </div>
+                                <div class="list w-[85%] p-2">
+                                    <p class="exp-title"> Bachelor Concepteur Intégrateur DevOps </p>
+                                    <p class="exp-text"> Sept 2023 - Today </p>
+                                    <p class="exp-text"> EPSI TOULOUSE </p>
+                                </div>
+                            </div>
+                            
+                            <div class="rounded-md flex items-stretch">
+                                <div class="flex flex-col w-[15%] justify-center items-center "> 
+                                    <div class="h-2"> 
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                </div>
+                                <div class="w-[85%]"></div>
+                            </div>
+                            <div class="rounded-md flex items-stretch">
+                                <div class="flex flex-col w-[15%] justify-center items-center "> 
+                                    <div class="h-1/3"> 
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                    <image class="h-1/3 w-7" src="assets/icon_design/row.svg"> </image>
+                                    <div class="h-1/3 flex justify-center items-center">
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                </div>
+                                <div class="list w-[85%] p-2">
+                                    <p class="exp-title"> Bachelor Concepteur Intégrateur DevOps </p>
+                                    <p class="exp-text"> Sept 2023 - Today </p>
+                                    <p class="exp-text"> EPSI TOULOUSE </p>
+                                </div>
+                            </div>
+
+                           
+                           
+                        </div>    
+                    </div>
+                </div>
+
+                 <!-- Section education -->
+                  
+                <div class="bgcase h-[40%] max-h-[40%] justify-start">
+                    <div id="competences" class="flex justify-center justify-between ">
+                        <h2> Mes Diplômes </h2>
+                        <img src="assets/icon_design/school.svg" alt="" class="h-6 w-6">
+                    </div>
+                    <div class="buttonsadmin mb-[15px] mt-[10px]">
+                        <button class="buttonadmin">Ajouter</button>
+                        <button class="buttonadmin">Modifier</button>
+                    </div>
+                    <div class="max-h-[100px] overflow-hidden">
+                        <div class="h-full scrolbar overflow-y-auto">
+
+                            <div class="rounded-md flex items-stretch">
+                                <div class="flex flex-col w-[15%] justify-center items-center "> 
+                                    <div class="h-1/3"></div>
+                                    <image class="h-1/3 w-7" src="assets/icon_design/row.svg"> </image>
+                                    <div class="h-1/3 flex justify-center items-center">
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                </div>
+                                <div class="list w-[85%] p-2">
+                                    <p class="exp-title"> Bachelor Concepteur Intégrateur DevOps </p>
+                                    <p class="exp-text"> Sept 2023 - Today </p>
+                                    <p class="exp-text"> EPSI TOULOUSE </p>
+                                </div>
+                            </div>
+
+                            <div class="rounded-md flex items-stretch">
+                                <div class="flex flex-col w-[15%] justify-center items-center "> 
+                                    <div class="h-2"> 
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                </div>
+                                <div class="w-[85%]"></div>
+                            </div>
+                            <div class="rounded-md flex items-stretch">
+                                <div class="flex flex-col w-[15%] justify-center items-center "> 
+                                    <div class="h-1/3"> 
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                    <image class="h-1/3 w-7" src="assets/icon_design/row.svg"> </image>
+                                    <div class="h-1/3 flex justify-center items-center">
+                                        <div class="bg-black h-full w-1"></div>
+                                    </div>
+                                </div>
+                                <div class="list w-[85%] p-2">
+                                    <p class="exp-title"> Bachelor Concepteur Intégrateur DevOps </p>
+                                    <p class="exp-text"> Sept 2023 - Today </p>
+                                    <p class="exp-text"> EPSI TOULOUSE </p>
+                                </div>
+                            </div>
+                            
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+
+    <script src="/js/loadcontent.js"></script>  
+    <script src="/js/loadhome.js"></script> 
+    <script src="/js/loadlogin.js"></script> 
+    <script src="/js/email.js"></script>
+    <script src="/js/zoom-in.js"></script> 
+    <script src="/js/fade.js"></script> 
+    <script src="/js/loadCurrentFiles.js"></script>
+    <script src="/js/updateFileName.js"></script>
+</body>
+</html>
