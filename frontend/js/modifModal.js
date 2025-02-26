@@ -21,7 +21,7 @@ function initializeModal() {
             content: `
                 <form class="flex flex-col gap-4" id="modifData">
                     <input type="hidden" name="form_id" value="modifData">
-                    <input type="text" placeholder="Nouveau poste" name="poste" class="p-2 rounded bg-gray-600 text-white">
+                    <input type="text" placeholder="Nouveau poste" name="poste" class="p-2 rounded bg-gray-600 text-white" required>
                     <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
                         Enregistrer
                     </button>
@@ -31,9 +31,9 @@ function initializeModal() {
         bio: {
             title: 'Modifier la bio',
             content: `
-                <form class="flex flex-col gap-4" id="modifData"">
+                <form class="flex flex-col gap-4" id="modifData">
                     <input type="hidden" name="form_id" value="modifData">    
-                    <textarea placeholder="Nouvelle bio" name="bio" class="p-2 rounded bg-gray-600 text-white h-32"></textarea>
+                    <textarea placeholder="Nouvelle bio" name="bio" class="p-2 rounded bg-gray-600 text-white h-32" required></textarea>
                     <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
                         Enregistrer
                     </button>
@@ -45,7 +45,7 @@ function initializeModal() {
             content: `
                 <form class="flex flex-col gap-4" id="modifData">
                     <input type="hidden" name="form_id" value="modifData">  
-                    <input type="email" placeholder="Nouvel email" name="email" class="p-2 rounded bg-gray-600 text-white">
+                    <input type="email" placeholder="Nouvel email" name="email" class="p-2 rounded bg-gray-600 text-white" required>
                     <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
                         Enregistrer
                     </button>
@@ -57,7 +57,7 @@ function initializeModal() {
             content: `
                 <form class="flex flex-col gap-4" id="modifData">
                     <input type="hidden" name="form_id" value="modifData">  
-                    <input type="tel" placeholder="Nouveau numéro de téléphone" name="telephone" class="p-2 rounded bg-gray-600 text-white">
+                    <input type="tel" placeholder="Nouveau numéro de téléphone" name="telephone" class="p-2 rounded bg-gray-600 text-white" required>
                     <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
                         Enregistrer
                     </button>
@@ -69,7 +69,7 @@ function initializeModal() {
             content: `
                 <form class="flex flex-col gap-4" id="modifData" >
                     <input type="hidden" name="form_id" value="modifData">  
-                    <input type="number" placeholder="Nouvel âge" name="age" class="p-2 rounded bg-gray-600 text-white">
+                    <input type="number" placeholder="Nouvel âge" name="age" class="p-2 rounded bg-gray-600 text-white" required>
                     <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
                         Enregistrer
                     </button>
@@ -81,7 +81,7 @@ function initializeModal() {
             content: `
                 <form class="flex flex-col gap-4" id="modifData"> 
                     <input type="hidden" name="form_id" value="modifData">  
-                    <input type="text" placeholder="Nouvelle ville" name="ville" class="p-2 rounded bg-gray-600 text-white"> 
+                    <input type="text" placeholder="Nouvelle ville" name="ville" class="p-2 rounded bg-gray-600 text-white" required> 
                     <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
                         Enregistrer
                     </button>
@@ -117,7 +117,7 @@ function initializeModal() {
             content: `  
                 <form class="flex flex-col gap-4" id="modifData">
                     <input type="hidden" name="form_id" value="modifData">  
-                    <input type="textarea" placeholder="veille" class="p-2 rounded bg-gray-600 text-white">
+                    <textarea placeholder="veille" name="veille" class="p-2 rounded bg-gray-600 text-white h-32" required> </textarea>
                     <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
                         Enregistrer
                     </button>
@@ -143,9 +143,9 @@ function initializeModal() {
             content: `
                 <form class="flex flex-col gap-4" id="modifData">
                     <input type="hidden" name="form_id" value="modifData"> 
-                    <input type="text" placeholder="Titre de l'experience" name="titre_experience" class="p-2 rounded bg-gray-600 text-white">
-                    <input type="text" placeholder="Période (Sept 2023 - Juin 2024)" name="periode_experience" class="p-2 rounded bg-gray-600 text-white">
-                    <input type="text" placeholder="Nom de l'entreprise" name="nom_experience" class="p-2 rounded bg-gray-600 text-white">
+                    <input type="text" placeholder="Titre de l'experience" name="titre_experience" class="p-2 rounded bg-gray-600 text-white" required>
+                    <input type="text" placeholder="Période (Sept 2023 - Juin 2024)" name="periode_experience" class="p-2 rounded bg-gray-600 text-white" required>
+                    <input type="text" placeholder="Nom de l'entreprise" name="nom_experience" class="p-2 rounded bg-gray-600 text-white" required>
                     <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
                         Enregistrer
                     </button>
@@ -169,7 +169,44 @@ function initializeModal() {
             content: `  
                 <form class="flex flex-col gap-4" id="modifData">
                     <input type="hidden" name="form_id" value="modifData">  
-                    <input type="text" placeholder="Nouveau projet" class="p-2 rounded bg-gray-600 text-white">
+                    <input type="text" placeholder="Titre" name="titre" class="p-2 rounded bg-gray-600 text-white">
+                    
+                    <textarea placeholder="Description" name="description" class="p-2 rounded bg-gray-600 text-white h-12" required> </textarea>
+                    
+                    <div class="flex flex-row w-full gap-2 items-stretch">
+                        <div class="w-[32%]">
+                            <label for="compt_1" class="text-white">Compétence 1</label>
+                            <input type="file"  name="compt_1" class="w-full p-2 rounded bg-gray-600 text-white" required>
+                        </div>
+                        <div class="w-[32%]">
+                            <label for="compt_2" class="text-white">Compétence 2</label>
+                            <input type="file"  name="compt_2" class="w-full p-2 rounded bg-gray-600 text-white">
+                        </div>
+                        <div class="w-[32%]">
+                            <label for="compt_3" class="text-white">Compétence 3</label>
+                            <input type="file"  name="compt_3" class="w-full p-2 rounded bg-gray-600 text-white">
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-row w-full gap-2 items-stretch">
+                        <div class="w-[32%]">
+                            <label for="techno_1" class="text-white">Techno 1</label>
+                            <input type="file"  name="techno_1" class="w-full p-2 rounded bg-gray-600 text-white" required>
+                        </div>
+                        <div class="w-[32%]">
+                            <label for="techno_2" class="text-white">Techno 2</label>
+                            <input type="file"  name="techno_2" class="w-full p-2 rounded bg-gray-600 text-white ">
+                        </div>
+                        <div class="w-[32%]">
+                            <label for="techno_3" class="text-white">Techno 3</label>
+                            <input type="file"  name="techno_3" class="w-full p-2 rounded bg-gray-600 text-white">
+                        </div>
+                    </div>
+
+                    <div classe="flex gap-2"> 
+                    <input type="text" placeholder="Visiter" name="visiter" class="p-2 rounded bg-gray-600 text-white">
+                    <input type="text" placeholder="Code" name="code" class="p-2 rounded bg-gray-600 text-white" required>
+                    </div>
                     <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
                         Enregistrer
                     </button>

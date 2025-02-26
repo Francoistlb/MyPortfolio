@@ -2,8 +2,8 @@
 
 class ModifData {
     private $pdo;
-    private $target_image = "/var/www/html/frontend/assets/image/";
-    private $target_cv = "/var/www/html/frontend/assets/documents/";
+    private $target_image = "/usr/share/nginx/html/frontend/assets/image/";
+    private $target_cv = "/usr/share/nginx/html/frontend/assets/documents/";
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
@@ -18,13 +18,20 @@ class ModifData {
 
     public function updateData($formData) {
         try {
-            error_log("Données reçues : " . print_r($formData, true));  // Log des données reçues
+            error_log("=== Début ModifData::updateData ===");
+            error_log("Données reçues dans updateData: " . print_r($formData, true));
+
+            // Vérification des données requises
+            if (!isset($formData['form_id'])) {
+                error_log("Erreur: form_id manquant");
+                return false;  // Retour simplifié
+            }
 
             // Texte updates
             if (isset($formData['poste'])) {   
                 $data = $formData['poste'];
                 $stmt = $this->pdo->prepare("UPDATE Information SET Poste = ? WHERE id = 1");
-                return $stmt->execute([$data]);
+                return $stmt->execute([$data]);  // Retour direct du résultat de l'exécution
             }
 
             if (isset($formData['bio'])) {   
@@ -73,7 +80,7 @@ class ModifData {
                 $target_file = $this->target_cv . "cv.pdf";
 
                 if (move_uploaded_file($_FILES["cv"]["tmp_name"], $target_file)) {
-                    $cv_path = "../frontend/assets/documents/cv.pdf";
+                    $cv_path ="../frontend/assets/documents/cv.pdf";
                     $stmt = $this->pdo->prepare("UPDATE Information SET Cv = ? WHERE id = 1");
                     return $stmt->execute([$cv_path]);
                 }
@@ -81,7 +88,7 @@ class ModifData {
 
             if (isset($formData['veille'])) {
                 $data = $formData['veille'];
-                $stmt = $this->pdo->prepare("UPDATE Veille SET Veille = ? WHERE id = 1");
+                $stmt = $this->pdo->prepare("UPDATE Information SET Veille = ? WHERE id = 1");
                 return $stmt->execute([$data]);
             }
 
@@ -91,7 +98,7 @@ class ModifData {
                 $data2 = $formData['periode_diplome'];
                 $data3 = $formData['ecole_diplome'];
                 $stmt = $this->pdo->prepare("INSERT INTO Diplome (Titre, Periode, Ecole) VALUES (?, ?, ?)");
-                return $stmt->execute([$data1,$data2,$data3]);  
+                return $stmt->execute([$data1,$data2,$data3]);
             }
 
             if (isset($formData['titre_experience']) && isset($formData['periode_experience']) && isset($formData['nom_experience'])) 
@@ -100,15 +107,18 @@ class ModifData {
                 $data2 = $formData['periode_experience'];
                 $data3 = $formData['nom_experience'];
                 $stmt = $this->pdo->prepare("INSERT INTO Experience (Titre, Periode, Entreprise) VALUES (?, ?, ?)");
-                return $stmt->execute([$data1,$data2,$data3]);  
+                return $stmt->execute([$data1,$data2,$data3]);
             }
 
-
-            error_log("Les champs du diplôme ne sont pas tous présents");
+            // Si aucune condition n'a été exécutée
+            error_log("Aucun champ reconnu dans les données");
             return false;
-        }
-        catch (PDOException $e) {
-            error_log("Erreur SQL: " . $e->getMessage());
+
+        } catch (PDOException $e) {
+            error_log("Erreur PDO dans updateData: " . $e->getMessage());
+            return false;
+        } catch (Exception $e) {
+            error_log("Exception dans updateData: " . $e->getMessage());
             return false;
         }
     }

@@ -102,7 +102,7 @@
                         <h2> Mes projets </h2>
                     </div>
                     <div class="buttonsadmin mt-[10px]">
-                        <button class="buttonadmin">Ajouter</button>
+                        <button class="buttonadmin modify-btn" data-type="projets">Ajouter</button>
                     </div>
                     <div class="card rounded-md flex items-center justify-between p-2">
                         <div class="flex items-center gap-5"> 
@@ -129,109 +129,25 @@
                         <button class="buttonadmin modify-btn" data-type="experience"> Ajouter </button>
                     </div>
                     <div class="max-h-[350px] overflow-hidden">
-                        <div class="h-full scrolbar overflow-y-auto">
-                           
-                        
-                            <div class="rounded-md flex items-stretch">
-                                <div class="flex flex-col w-[15%] justify-center items-center "> 
-                                    <div class="h-1/3"></div>
-                                    <image class="h-1/3 w-7" src="../assets/icon_design/row.svg"> </image>
-                                    <div class="h-1/3 flex justify-center items-center">
-                                        <div class="bg-black h-full w-1"></div>
-                                    </div>
-                                </div>
-                                <div class="list w-[85%] p-2">
-                                    <p class="exp-title"> Bachelor Concepteur Intégrateur DevOps </p>
-                                    <p class="exp-text"> Sept 2023 - Today </p>
-                                    <p class="exp-text"> EPSI TOULOUSE </p>
-                                </div>
-                            </div>
+                        <div class="h-full experiencelist scrolbar overflow-y-auto">
                             
-                            <div class="rounded-md flex items-stretch">
-                                <div class="flex flex-col w-[15%] justify-center items-center "> 
-                                    <div class="h-2"> 
-                                        <div class="bg-black h-full w-1"></div>
-                                    </div>
-                                </div>
-                                <div class="w-[85%]"></div>
-                            </div>
-                            <div class="rounded-md flex items-stretch">
-                                <div class="flex flex-col w-[15%] justify-center items-center "> 
-                                    <div class="h-1/3"> 
-                                        <div class="bg-black h-full w-1"></div>
-                                    </div>
-                                    <image class="h-1/3 w-7" src="../assets/icon_design/row.svg"> </image>
-                                    <div class="h-1/3 flex justify-center items-center">
-                                        <div class="bg-black h-full w-1"></div>
-                                    </div>
-                                </div>
-                                <div class="list w-[85%] p-2">
-                                    <p class="exp-title"> Bachelor Concepteur Intégrateur DevOps </p>
-                                    <p class="exp-text"> Sept 2023 - Today </p>
-                                    <p class="exp-text"> EPSI TOULOUSE </p>
-                                </div>
-                            </div>
-
-                           
-                           
                         </div>    
                     </div>
                 </div>
 
                  <!-- Section education -->
-                  
                 <div class="bgcase h-[40%] max-h-[40%] justify-start">
-                    <div id="competences" class="flex justify-center justify-between ">
+                    <div id="competences" class="flex justify-center justify-between">
                         <h2> Mes Diplômes </h2>
-                       </div>
+                    </div>
                     <div class="buttonsadmin mb-[15px] mt-[10px]">
                         <button class="buttonadmin modify-btn" data-type="diplome">Ajouter</button>
                         <button class="buttonadmin modify-btn" data-type="diplome">Modifier</button>
                     </div>
                     <div class="max-h-[100px] overflow-hidden">
-                        <div class="h-full scrolbar overflow-y-auto">
-
-                            <div class="rounded-md flex items-stretch">
-                                <div class="flex flex-col w-[15%] justify-center items-center "> 
-                                    <div class="h-1/3"></div>
-                                    <image class="h-1/3 w-7" src="../assets/icon_design/row.svg"> </image>
-                                    <div class="h-1/3 flex justify-center items-center">
-                                        <div class="bg-black h-full w-1"></div>
-                                    </div>
-                                </div>
-                                <div class="list w-[85%] p-2">
-                                    <p class="exp-title"> Bachelor Concepteur Intégrateur DevOps </p>
-                                    <p class="exp-text"> Sept 2023 - Today </p>
-                                    <p class="exp-text"> EPSI TOULOUSE </p>
-                                </div>
-                            </div>
-
-                            <div class="rounded-md flex items-stretch">
-                                <div class="flex flex-col w-[15%] justify-center items-center "> 
-                                    <div class="h-2"> 
-                                        <div class="bg-black h-full w-1"></div>
-                                    </div>
-                                </div>
-                                <div class="w-[85%]"></div>
-                            </div>
-                            <div class="rounded-md flex items-stretch">
-                                <div class="flex flex-col w-[15%] justify-center items-center "> 
-                                    <div class="h-1/3"> 
-                                        <div class="bg-black h-full w-1"></div>
-                                    </div>
-                                    <image class="h-1/3 w-7" src="../assets/icon_design/row.svg"> </image>
-                                    <div class="h-1/3 flex justify-center items-center">
-                                        <div class="bg-black h-full w-1"></div>
-                                    </div>
-                                </div>
-                                <div class="list w-[85%] p-2">
-                                    <p class="exp-title"> Bachelor Concepteur Intégrateur DevOps </p>
-                                    <p class="exp-text"> Sept 2023 - Today </p>
-                                    <p class="exp-text"> EPSI TOULOUSE </p>
-                                </div>
-                            </div>
-                            
-                        </div> 
+                        <div class="h-full diplomelist scrolbar overflow-y-auto">
+                            <!-- Le contenu sera injecté ici par JavaScript -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -245,11 +161,9 @@
     <script src="../js/loadhome.js"></script> 
     <script src="../js/loadlogin.js"></script> 
     <script src="../js/email.js"></script>
-    <script src="../js/zoom-in.js"></script> 
     <script src="../js/fade.js"></script> 
-    <script src="../js/loadCurrentFiles.js"></script>
-    <script src="../js/updateFileName.js"></script>
     <script src="../js/modifModal.js"></script>
     <script src="../js/modifModalFormCheck.js"></script>
+    <script src="../js/loadAdminData.js"></script>
 </body>
 </html>
