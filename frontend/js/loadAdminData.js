@@ -90,7 +90,9 @@ function updateExperiences(experiences) {
     const html = experiences.map(experience => `
         <div class="rounded-md flex items-stretch">
             <div class="flex flex-col w-[15%] justify-center items-center"> 
-                <div class="h-1/3"></div>
+                <div class="h-1/3">
+                    <div class="bg-black h-full w-1"></div>
+                </div>
                 <image class="h-1/3 w-7" src="../assets/icon_design/row.svg"> </image>
                 <div class="h-1/3 flex justify-center items-center">
                     <div class="bg-black h-full w-1"></div>

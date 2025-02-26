@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 pageToLoad = './components/projects.html';
                 break;
             case 'menu-home':
-                pageToLoad = '../components/home.html';
+                pageToLoad = './components/home.html';
                 break;
             case 'config':
                 pageToLoad = './components/login.html';
@@ -68,7 +68,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Charger la page via fetch si pageToLoad est défini
         if (pageToLoad) {
-            fetch(pageToLoad)
+            // Ajouter un paramètre de cache-busting pour forcer le rechargement
+            const cacheBuster = '?v=' + new Date().getTime();
+            
+            fetch(pageToLoad + cacheBuster, {
+                cache: 'no-store', // Désactiver le cache
+                headers: {
+                    'Pragma': 'no-cache',
+                    'Cache-Control': 'no-cache'
+                }
+            })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Erreur de chargement : ' + response.statusText);

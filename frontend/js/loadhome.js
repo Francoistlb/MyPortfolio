@@ -22,8 +22,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 modal.style.display = 'none';
             }, 500);
 
-            // Charger le contenu
-            fetch('./components/home.html')
+            // Charger le contenu avec anti-cache
+            const cacheBuster = '?v=' + new Date().getTime();
+            
+            fetch('./components/home.html' + cacheBuster, {
+                cache: 'no-store', // Désactiver le cache
+                headers: {
+                    'Pragma': 'no-cache',
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Expires': '0'
+                }
+            })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Erreur de chargement : ' + response.statusText);
@@ -33,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(html => {
                     dynamicContent.innerHTML = html;
                     dynamicContent.style.opacity = '1';
+                    console.log('Home content loaded with timestamp:', new Date().getTime());
                 })
                 .catch(error => {
                     console.error('Erreur de chargement dynamique :', error);
