@@ -91,7 +91,7 @@ function initializeModal() {
         photo: {
             title: 'Modifier la photo de profil',
             content: `
-                <form class="flex flex-col gap-4" id="modifData">
+                <form class="flex flex-col gap-4" id="modifData" enctype="multipart/form-data">
                     <input type="hidden" name="form_id" value="modifData">  
                     <input type="file" name="image" class="p-2 rounded bg-gray-600 text-white">
                     <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
@@ -103,7 +103,7 @@ function initializeModal() {
         cv: {
             title: 'Modifier le CV',
             content: `
-                <form class="flex flex-col gap-4" id="modifData">
+                <form class="flex flex-col gap-4" id="modifData" enctype="multipart/form-data">
                     <input type="hidden" name="form_id" value="modifData">  
                     <input type="file" name="cv" class="p-2 rounded bg-gray-600 text-white">
                     <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">

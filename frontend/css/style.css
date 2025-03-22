@@ -54,12 +54,10 @@ body {
 }
  
 .scrolbar::-webkit-scrollbar {
-    display: none; 
+    background-color:  rgba(88, 155, 150);
+    width: 3px;
 }
 
-.scrolbartest {
-    scrollbar-width: none; 
-}   
 
 
 

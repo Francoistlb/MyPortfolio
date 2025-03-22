@@ -2,17 +2,25 @@
 
 class ModifData {
     private $pdo;
-    private $target_image = "/usr/share/nginx/html/frontend/assets/image/";
-    private $target_cv = "/usr/share/nginx/html/frontend/assets/documents/";
+    private $target_image = "/var/www/html/assets/image/";
+    private $target_cv = "/var/www/html/assets/documents/";
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
-        // Créer les dossiers s'ils n'existent pas
+        // Créer les dossiers s'ils n'existent pas avec plus de détails sur les erreurs
         if (!file_exists($this->target_image)) {
-            mkdir($this->target_image, 0777, true);
+            error_log("Tentative de création du répertoire: " . $this->target_image);
+            $result = @mkdir($this->target_image, 0755, true);
+            if (!$result) {
+                error_log("Échec de création du répertoire. Erreur: " . error_get_last()['message']);
+            }
         }
         if (!file_exists($this->target_cv)) {
-            mkdir($this->target_cv, 0777, true);
+            error_log("Tentative de création du répertoire: " . $this->target_cv);
+            $result = @mkdir($this->target_cv, 0755, true);
+            if (!$result) {
+                error_log("Échec de création du répertoire. Erreur: " . error_get_last()['message']);
+            }
         }
     }
 
@@ -20,6 +28,14 @@ class ModifData {
         try {
             error_log("=== Début ModifData::updateData ===");
             error_log("Données reçues dans updateData: " . print_r($formData, true));
+            error_log("Action: " . ($_GET['action'] ?? 'non spécifiée'));
+            
+            // Débogage des fichiers (à ajouter avant les conditions)
+            error_log("FILES reçu: " . print_r($_FILES, true));
+            
+            // Vérification du répertoire de destination des images
+            error_log("Le répertoire cible existe-t-il? " . (file_exists($this->target_image) ? 'Oui' : 'Non'));
+            error_log("Permissions du répertoire cible: " . substr(sprintf('%o', fileperms($this->target_image)), -4));
 
             // Vérification des données requises
             if (!isset($formData['form_id'])) {
@@ -64,15 +80,34 @@ class ModifData {
                 return $stmt->execute([$data]);
             }
 
-            // File uploads
+            // Ajoutez ceci juste avant le traitement de $_FILES["image"]
+            if (isset($_FILES)) {
+                error_log("Fichiers reçus : " . print_r($_FILES, true));
+            }
+
             if (isset($_FILES["image"])) {
+                error_log("Traitement de l'image...");
+                
+                // Vérifier que le répertoire backend existe et le créer si nécessaire
+                if (!file_exists($this->target_image)) {
+                    if (!mkdir($this->target_image, 0777, true)) {
+                        error_log("Impossible de créer le répertoire cible backend");
+                        return false;
+                    }
+                }
+                
                 $imageFileType = strtolower(pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION));
                 $target_file = $this->target_image . "profile." . $imageFileType;
-
+                
                 if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                    $photo_path = "../frontend/assets/image/profile." . $imageFileType;
+                    // Chemin pour la base de données - ajusté pour le frontend
+                    $photo_path = "/shared-assets/image/profile." . $imageFileType;
+                    
                     $stmt = $this->pdo->prepare("UPDATE Information SET Photo = ? WHERE id = 1");
                     return $stmt->execute([$photo_path]);
+                } else {
+                    error_log("Échec du téléchargement de l'image");
+                    return false;
                 }
             }
 
@@ -80,7 +115,9 @@ class ModifData {
                 $target_file = $this->target_cv . "cv.pdf";
 
                 if (move_uploaded_file($_FILES["cv"]["tmp_name"], $target_file)) {
-                    $cv_path ="../frontend/assets/documents/cv.pdf";
+                    // Chemin pour la base de données
+                    $cv_path = "/shared-assets/documents/cv.pdf";
+                    
                     $stmt = $this->pdo->prepare("UPDATE Information SET Cv = ? WHERE id = 1");
                     return $stmt->execute([$cv_path]);
                 }

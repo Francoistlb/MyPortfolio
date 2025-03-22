@@ -7,6 +7,7 @@ services:
     container_name: PortfolioV2-frontend
     volumes:
       - ./frontend:/usr/share/nginx/html
+      - shared-assets:/usr/share/nginx/html/shared-assets
     ports:
       - "8080:80"
     networks:
@@ -18,6 +19,7 @@ services:
     container_name: PortfolioV2-backend
     volumes:
       - ./backend:/var/www/html
+      - shared-assets:/var/www/html/assets  # Laissé tel quel pour le backend
     ports:
       - "8081:80"
     depends_on:
@@ -77,9 +79,29 @@ services:
     networks:
       - app-network
 
+  # Nouveau service pour accéder au volume
+  assets-viewer:
+    image: alpine:latest
+    container_name: PortfolioV2-assets-viewer
+    command: sh -c "while true; do sleep 3600; done"  # Maintient le conteneur en vie
+    volumes:
+      - shared-assets:/assets
+      - ./assets-view:/assets-local  # Montage local
+    # Copie automatique des fichiers du volume vers le dossier local
+    entrypoint: >
+      sh -c "
+        mkdir -p /assets-local &&
+        cp -rv /assets/* /assets-local/ &&
+        echo 'Assets copiés dans ./assets-view' &&
+        tail -f /dev/null
+      "
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge
 
 volumes:
   db_data:
+  shared-assets:
