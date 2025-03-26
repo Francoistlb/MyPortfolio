@@ -10,11 +10,11 @@ function cv() {
 window.cv = cv;
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Charger les données immédiatement (sans vérification préalable des conteneurs)
+    loadAdminData();
+    
     // Déterminer si nous sommes sur la page d'administration
     const isAdminPage = window.location.href.includes('administration');
-    
-    // Charger les données immédiatement
-    loadAdminData();
     
     // Si nous sommes sur la page d'administration, ajuster la mise en page après le chargement
     if (isAdminPage) {
@@ -44,9 +44,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 const diplomesContainer = document.querySelector('.diplomelist');
                 const experiencesContainer = document.querySelector('.experiencelist');
                 
-                if (diplomesContainer || experiencesContainer) {
-                    console.log('Conteneurs détectés, rechargement des données');
-                    loadAdminData();
+                // Vérifier si les conteneurs existent ET s'ils sont vides avant de recharger
+                if ((diplomesContainer && diplomesContainer.children.length === 0) || 
+                    (experiencesContainer && experiencesContainer.children.length === 0)) {
+                    console.log('Conteneurs détectés vides, rechargement des données');
+                    
+                    // Déconnecter temporairement l'observateur pendant le chargement
+                    observer.disconnect();
+                    
+                    // Charger les données
+                    loadAdminData().then(() => {
+                        // Reconnecter l'observateur après le chargement
+                        const dynamicContent = document.getElementById('dynamic-content');
+                        if (dynamicContent) {
+                            observer.observe(dynamicContent, { childList: true, subtree: true });
+                        }
+                    });
                 }
             }
         });
@@ -57,8 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (dynamicContent) {
         observer.observe(dynamicContent, { childList: true, subtree: true });
     }
-    
-    setupCvDownload();
 });
 
 async function loadAdminData() {
@@ -66,8 +77,6 @@ async function loadAdminData() {
         console.log('Début du chargement des données');
         const response = await fetch('/index.php?action=getAdminData');
         const data = await response.json();
-        
-        console.log('Données reçues:', data); // Afficher toutes les données
         
         if (data.success) {
             if (data.data.informations) {
@@ -85,22 +94,22 @@ async function loadAdminData() {
                 updateExperiences(data.data.experiences);
             }
 
-            // Remplir les projets
-            updateProjets(data.data.projets);
-
-            updateGeneralInfo(data.data.informations);
+            if (data.data.competences) {
+                updateCompetences(data.data.competences);
+            }
         }
+        return true; // Indique que le chargement s'est bien terminé
     } catch (error) {
         console.error('Erreur lors du chargement des données:', error);
+        return false; // Indique que le chargement a échoué
     }
 }
 
 function updatePoste(informations) {
     const posteContainer = document.querySelector('.poste');
-    console.log('Poste mise à jour:', informations);
     
     if (!posteContainer) {
-        console.error('Container #postel non trouvé');
+        console.error('Container .poste non trouvé');
         return;
     }
     posteContainer.innerHTML = `<p class="text-[20px] font-bold">${informations.Poste || ''}</p>`;
@@ -108,7 +117,6 @@ function updatePoste(informations) {
 
 function updateBio(informations) {
     const bioContainer = document.querySelector('.bio');
-    console.log('Bio mise à jour:', informations);
     
     if (!bioContainer) {
         console.error('Container .bio non trouvé');
@@ -128,8 +136,7 @@ function updateImage(informations) {
     
     // Utiliser directement le chemin stocké en base de données
     const imagePath = informations.Photo || '/shared-assets/image/profile.png';
-    console.log('Chemin de l\'image:', imagePath);
-    
+   
     // Version originale avec bg-[10px_0px] pour le positionnement spécifique
     imageContainer.innerHTML = `<div class="h-[150px] w-[150px] rounded-full bg-cover bg-[10px_0px]" style="background-image: url('${imagePath}');"></div>`;
 }
@@ -137,15 +144,13 @@ function updateImage(informations) {
 function updateCvLink(informations) {
     // Mettre à jour la variable globale avec le chemin du CV
     globalCvPath = informations.Cv || '/shared-assets/documents/cv.pdf';
-    console.log('Chemin du CV mis à jour:', globalCvPath);
 }
 
 function updateDiplomes(diplomes) {
     const diplomesContainer = document.querySelector('.diplomelist');
-    console.log('Container trouvé:', diplomesContainer);
     
     if (!diplomesContainer) {
-        console.error('Container #diplomelist non trouvé');
+        console.error('Container .diplomelist non trouvé');
         return;
     }
 
@@ -186,10 +191,9 @@ function updateDiplomes(diplomes) {
 
 function updateExperiences(experiences) {
     const experiencesContainer = document.querySelector('.experiencelist');
-    console.log('Container trouvé:', experiencesContainer);
     
     if (!experiencesContainer) {
-        console.error('Container des expériences non trouvé');
+        console.error('Container .expériences non trouvé');
         return;
     }
 
@@ -225,5 +229,28 @@ function updateExperiences(experiences) {
     experiencesContainer.innerHTML = html;
 }
 
-// ... autres fonctions de mise à jour ... 
-// ... autres fonctions de mise à jour ... 
+function updateCompetences(competences) {
+    const competencesContainer = document.querySelector('.competenceslist');
+    
+    if (!competencesContainer) {
+        console.error('Container des compétences non trouvé');
+        return;
+    }
+    
+    // Remplacer les classes existantes pour une grille fixe
+    competencesContainer.className = 'competenceslist grid grid-cols-4 gap-4 p-2';
+    
+    let html = '';
+    console.log(`Nombre de compétences: ${competences.length}`);
+    
+    competences.forEach(competence => {
+        const iconPath = `/shared-assets/competences/${competence.Nom.toLowerCase()}.svg`;
+        html += `<div class="flex justify-center items-center">
+                    <img class="h-[40px] w-[40px]" src="${iconPath}" alt="${competence.Nom}" title="${competence.Nom}">
+                </div>`;
+    });
+    
+    competencesContainer.innerHTML = html || '<p class="text-center w-full text-gray-400">Aucune compétence disponible</p>';
+}
+
+

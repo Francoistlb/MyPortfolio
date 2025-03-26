@@ -4,6 +4,7 @@ class ModifData {
     private $pdo;
     private $target_image = "/var/www/html/assets/image/";
     private $target_cv = "/var/www/html/assets/documents/";
+    private $target_competence = "/var/www/html/assets/competences/";
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
@@ -18,6 +19,13 @@ class ModifData {
         if (!file_exists($this->target_cv)) {
             error_log("Tentative de création du répertoire: " . $this->target_cv);
             $result = @mkdir($this->target_cv, 0755, true);
+            if (!$result) {
+                error_log("Échec de création du répertoire. Erreur: " . error_get_last()['message']);
+            }
+        }
+        if (!file_exists($this->target_competence)) {
+            error_log("Tentative de création du répertoire: " . $this->target_competence);
+            $result = @mkdir($this->target_competence, 0755, true);
             if (!$result) {
                 error_log("Échec de création du répertoire. Erreur: " . error_get_last()['message']);
             }
@@ -145,6 +153,54 @@ class ModifData {
                 $data3 = $formData['nom_experience'];
                 $stmt = $this->pdo->prepare("INSERT INTO Experience (Titre, Periode, Entreprise) VALUES (?, ?, ?)");
                 return $stmt->execute([$data1,$data2,$data3]);
+            }
+
+            if (isset($formData['nom_competence']) && isset($formData['competence_id'])) {
+                error_log("Traitement de la mise à jour de compétence ID: " . $formData['competence_id']);
+                
+                // Récupérer l'ID de la compétence
+                $competence_id = $formData['competence_id'];
+                $nom_competence = $formData['nom_competence'];
+                
+                // Si un fichier d'icône a été téléchargé
+                if (isset($_FILES["icone_competence"]) && $_FILES["icone_competence"]["size"] > 0) {
+                    error_log("Traitement du fichier d'icône de compétence...");
+                    
+                    // Vérifier que le répertoire de compétences existe
+                    if (!file_exists($this->target_competence)) {
+                        if (!mkdir($this->target_competence, 0777, true)) {
+                            error_log("Impossible de créer le répertoire cible pour les compétences");
+                            return false;
+                        }
+                    }
+                    
+                    // Déterminer l'extension du fichier
+                    $iconFileType = strtolower(pathinfo($_FILES["icone_competence"]["name"], PATHINFO_EXTENSION));
+                    
+                    // Simplifier le nom de fichier - utiliser juste le nom de la compétence en minuscules
+                    $icon_filename = strtolower(str_replace(' ', '_', $nom_competence)) . "." . $iconFileType;
+                    $target_file = $this->target_competence . $icon_filename;
+                    
+                    error_log("Tentative de déplacement du fichier vers: " . $target_file);
+                    
+                    if (move_uploaded_file($_FILES["icone_competence"]["tmp_name"], $target_file)) {
+                        // Chemin complet pour la base de données avec shared-assets
+                        $icon_path = "/shared-assets/competences/" . $icon_filename;
+                        
+                        error_log("Fichier déplacé avec succès, mise à jour de la BD avec chemin: " . $icon_path);
+                        
+                        // Effectuer la mise à jour - utiliser la colonne 'Image' comme dans votre base de données
+                        $stmt = $this->pdo->prepare("UPDATE Competence SET Nom = ?, Image = ? WHERE id = ?");
+                        return $stmt->execute([$nom_competence, $icon_path, $competence_id]);
+                    } else {
+                        error_log("Échec du téléchargement de l'icône de compétence. Erreur: " . error_get_last()['message']);
+                        return false;
+                    }
+                } else {
+                    // Mise à jour du nom de la compétence uniquement
+                    $stmt = $this->pdo->prepare("UPDATE Competence SET Nom = ? WHERE id = ?");
+                    return $stmt->execute([$nom_competence, $competence_id]);
+                }
             }
 
             // Si aucune condition n'a été exécutée

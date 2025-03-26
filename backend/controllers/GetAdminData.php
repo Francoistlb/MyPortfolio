@@ -29,6 +29,11 @@ class GetAdminData {
             $projetsStmt = $this->pdo->query($projetsQuery);
             $projets = $projetsStmt->fetchAll(PDO::FETCH_ASSOC);
 
+            // Récupérer les compétences
+            $competencesQuery = "SELECT * FROM Competence";
+            $competencesStmt = $this->pdo->query($competencesQuery);
+            $competences = $competencesStmt->fetchAll(PDO::FETCH_ASSOC);
+
             // Structurer les données
             return [
                 'success' => true,
@@ -37,6 +42,7 @@ class GetAdminData {
                     'diplomes' => $diplomes,
                     'experiences' => $experiences,
                     'projets' => $projets,
+                    'competences' => $competences,
                 ]
             ];
 
