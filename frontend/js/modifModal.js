@@ -320,7 +320,89 @@ function initializeModal() {
                 </form>
             `
         },
-        
+        projet: {
+            title: 'Ajouter un projet',
+            content: `
+                <form class="flex flex-col gap-4" id="modifData">
+                    <input type="hidden" name="form_id" value="modifData">
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="titre">
+                            Titre
+                        </label>
+                        <input type="text" id="titre" name="titre" placeholder="Titre du projet" class="p-2 rounded bg-gray-600 text-white" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
+                            Description
+                        </label>
+                        <textarea id="description" name="description" placeholder="Description du projet" rows="3" class="p-2 rounded bg-gray-600 text-white" required></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="compt1">
+                                Compétence 1
+                            </label>
+                            <input type="text" id="compt1" name="compt1" placeholder="Première compétence" class="p-2 rounded bg-gray-600 text-white">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="compt2">
+                                Compétence 2
+                            </label>
+                            <input type="text" id="compt2" name="compt2" placeholder="Deuxième compétence" class="p-2 rounded bg-gray-600 text-white">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="compt3">
+                                Compétence 3
+                            </label>
+                            <input type="text" id="compt3" name="compt3" placeholder="Troisième compétence" class="p-2 rounded bg-gray-600 text-white">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="techno1">
+                                Technologie 1
+                            </label>
+                            <input type="text" id="techno1" name="techno1" placeholder="Première technologie" class="p-2 rounded bg-gray-600 text-white">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="techno2">
+                                Technologie 2
+                            </label>
+                            <input type="text" id="techno2" name="techno2" placeholder="Deuxième technologie" class="p-2 rounded bg-gray-600 text-white">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="techno3">
+                                Technologie 3
+                            </label>
+                            <input type="text" id="techno3" name="techno3" placeholder="Troisième technologie" class="p-2 rounded bg-gray-600 text-white">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="visiter">
+                                Lien Visiter
+                            </label>
+                            <input type="text" id="visiter" name="visiter" placeholder="Lien vers le projet" class="p-2 rounded bg-gray-600 text-white">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="code">
+                                Lien Code
+                            </label>
+                            <input type="text" id="code" name="code" placeholder="Lien vers le code source" class="p-2 rounded bg-gray-600 text-white">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
+                        Enregistrer
+                    </button>
+                </form>
+            `
+        }
     };
 
     // Gestionnaire de clic pour les boutons modifier

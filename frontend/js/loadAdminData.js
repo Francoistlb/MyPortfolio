@@ -40,13 +40,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-                // Vérifier si les conteneurs diplomelist ou experiencelist ont été ajoutés
+                // Vérifier si les conteneurs diplomelist, experiencelist, ville ou age ont été ajoutés
                 const diplomesContainer = document.querySelector('.diplomelist');
                 const experiencesContainer = document.querySelector('.experiencelist');
-                
+                const villeContainer = document.querySelector('.ville');
+                const ageContainer = document.querySelector('.age');
+                const telephoneContainer = document.querySelector('.telephone');
+                const emailContainer = document.querySelector('.email');
+
                 // Vérifier si les conteneurs existent ET s'ils sont vides avant de recharger
                 if ((diplomesContainer && diplomesContainer.children.length === 0) || 
-                    (experiencesContainer && experiencesContainer.children.length === 0)) {
+                    (experiencesContainer && experiencesContainer.children.length === 0) ||
+                    (villeContainer && villeContainer.children.length === 0) ||
+                    (ageContainer && ageContainer.children.length === 0) ||
+                    (telephoneContainer && telephoneContainer.children.length === 0) ||
+                    (emailContainer && emailContainer.children.length === 0)) {
                     console.log('Conteneurs détectés vides, rechargement des données');
                     
                     // Déconnecter temporairement l'observateur pendant le chargement
@@ -84,6 +92,10 @@ async function loadAdminData() {
                 updatePoste(data.data.informations);
                 updateImage(data.data.informations);
                 updateCvLink(data.data.informations);
+                updateVille(data.data.informations);
+                updateAge(data.data.informations);
+                updateTelephone(data.data.informations);
+                updateEmail(data.data.informations);
             }
             // Remplir les diplômes
             if (data.data.diplomes) {
@@ -124,6 +136,48 @@ function updateBio(informations) {
     }
     // Accéder directement à la propriété Bio de l'objet informations
     bioContainer.innerHTML = `<p>${informations.Bio || ''}</p>`;
+}
+
+function updateVille(informations) {
+    const villeContainer = document.querySelector('.ville');
+    
+    if (!villeContainer) {
+        console.error('Container .ville non trouvé');
+        return;
+    }
+    console.log('Ville reçue:', informations.Ville);
+    villeContainer.innerHTML = `<p class="icon-profil py-1 px-3">${informations.Ville || 'Non spécifié'}</p>`;
+}
+
+function updateAge(informations) {
+    const ageContainer = document.querySelector('.age');
+    
+    if (!ageContainer) {
+        console.error('Container .age non trouvé');
+        return;
+    }
+    console.log('Age reçu:', informations.Age);
+    ageContainer.innerHTML = `<p class="icon-profil py-1 px-3">${informations.Age || 'Non spécifié'}</p>`;
+}
+
+function updateTelephone(informations) {
+    const telephoneContainer = document.querySelector('.telephone');
+    
+    if (!telephoneContainer) {
+        console.error('Container .telephone non trouvé');
+        return;
+    }
+    telephoneContainer.innerHTML = `<p class="contact">${informations.Telephone || 'Non spécifié'}</p>`;
+}
+
+function updateEmail(informations) {
+    const emailContainer = document.querySelector('.email');
+    
+    if (!emailContainer) {
+        console.error('Container .email non trouvé');
+        return; 
+    }
+    emailContainer.innerHTML = `<p class="contact">${informations.Email || 'Non spécifié'}</p>`;
 }
 
 function updateImage(informations) {
