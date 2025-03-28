@@ -10,11 +10,14 @@ function cv() {
 window.cv = cv;
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Charger les données immédiatement (sans vérification préalable des conteneurs)
-    loadAdminData();
-    
-    // Déterminer si nous sommes sur la page d'administration
+    // Déterminer sur quelle page nous sommes
     const isAdminPage = window.location.href.includes('administration');
+    const projetsListContainer = document.querySelector('.listprojets');
+    
+    // Charger les données immédiatement si on est sur la page admin ou si le conteneur de projets existe
+    if (isAdminPage || projetsListContainer) {
+        loadAdminData();
+    }
     
     // Si nous sommes sur la page d'administration, ajuster la mise en page après le chargement
     if (isAdminPage) {
@@ -23,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Forcer un recalcul de la mise en page
             const experiencesContainer = document.querySelector('.experiencelist');
             const diplomesContainer = document.querySelector('.diplomelist');
+            const projetsContainer = document.querySelector('.projetslist');
             
             if (experiencesContainer) {
                 experiencesContainer.style.display = 'none';
@@ -33,6 +37,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 diplomesContainer.style.display = 'none';
                 setTimeout(() => { diplomesContainer.style.display = ''; }, 10);
             }
+
+            if (projetsContainer) {
+                projetsContainer.style.display = 'none';
+                setTimeout(() => { projetsContainer.style.display = ''; }, 10);
+            }
+
+            if (projetsListContainer) {
+                projetsListContainer.style.display = 'none';
+                setTimeout(() => { projetsListContainer.style.display = ''; }, 10);
+            }
         }, 500);
     }
     
@@ -40,21 +54,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-                // Vérifier si les conteneurs diplomelist, experiencelist, ville ou age ont été ajoutés
-                const diplomesContainer = document.querySelector('.diplomelist');
-                const experiencesContainer = document.querySelector('.experiencelist');
-                const villeContainer = document.querySelector('.ville');
-                const ageContainer = document.querySelector('.age');
-                const telephoneContainer = document.querySelector('.telephone');
-                const emailContainer = document.querySelector('.email');
+                // Vérifier si les conteneurs sont ajoutés
+                const containers = {
+                    diplomelist: document.querySelector('.diplomelist'),
+                    experiencelist: document.querySelector('.experiencelist'),
+                    ville: document.querySelector('.ville'),
+                    age: document.querySelector('.age'),
+                    telephone: document.querySelector('.telephone'),
+                    email: document.querySelector('.email'),
+                    listprojets: document.querySelector('.listprojets')
+                };
 
-                // Vérifier si les conteneurs existent ET s'ils sont vides avant de recharger
-                if ((diplomesContainer && diplomesContainer.children.length === 0) || 
-                    (experiencesContainer && experiencesContainer.children.length === 0) ||
-                    (villeContainer && villeContainer.children.length === 0) ||
-                    (ageContainer && ageContainer.children.length === 0) ||
-                    (telephoneContainer && telephoneContainer.children.length === 0) ||
-                    (emailContainer && emailContainer.children.length === 0)) {
+                // Vérifier si un des conteneurs existe et est vide
+                const needsReload = Object.values(containers).some(container => 
+                    container && container.children.length === 0
+                );
+
+                if (needsReload) {
                     console.log('Conteneurs détectés vides, rechargement des données');
                     
                     // Déconnecter temporairement l'observateur pendant le chargement
@@ -108,6 +124,10 @@ async function loadAdminData() {
 
             if (data.data.competences) {
                 updateCompetences(data.data.competences);
+            }
+            if (data.data.projets) {
+                updateProjets(data.data.projets);
+                updateProjetsList(data.data.projets);
             }
         }
         return true; // Indique que le chargement s'est bien terminé
@@ -295,16 +315,105 @@ function updateCompetences(competences) {
     competencesContainer.className = 'competenceslist grid grid-cols-4 gap-4 p-2';
     
     let html = '';
-    console.log(`Nombre de compétences: ${competences.length}`);
-    
     competences.forEach(competence => {
-        const iconPath = `/shared-assets/competences/${competence.Nom.toLowerCase()}.svg`;
         html += `<div class="flex justify-center items-center">
-                    <img class="h-[40px] w-[40px]" src="${iconPath}" alt="${competence.Nom}" title="${competence.Nom}">
+                    <img class="h-[40px] w-[40px]" src="${competence.Image}" alt="${competence.Nom}" title="${competence.Nom}">
                 </div>`;
     });
     
     competencesContainer.innerHTML = html || '<p class="text-center w-full text-gray-400">Aucune compétence disponible</p>';
+}
+
+function updateProjets(projets) {
+    const projetsContainer = document.querySelector('.projetslist');
+    
+    if (!projetsContainer) {
+        console.error('Container .projetslist non trouvé'); 
+        return;
+    }
+
+    let html = '';
+    console.log(`Nombre de projets: ${projets.length}`);
+
+    projets.forEach(projet => {
+        html += `
+            <div class="card flex justify-between items-center w-full p-2"> 
+                <div class="flex justify-start items-center"> 
+                    <img class="mr-5 h-[20px] w-[20px]" src="${projet.Icone}" alt="${projet.Titre}">
+                    <p><strong>${projet.Titre}</strong></p>
+                </div>
+                <img src="assets/icon_design/fleche.svg" alt="">
+            </div>
+        `;
+    });
+
+    projetsContainer.innerHTML = html || '<p class="text-center w-full text-gray-400">Aucun projet disponible</p>';
+}
+
+function updateProjetsList(projets) {
+    const projetsContainer = document.querySelector('.listprojets');
+    
+    if (!projetsContainer) {
+        console.error('Container .listprojets non trouvé'); 
+        return;
+    }
+
+    let html = '';
+    projets.forEach(projet => {
+        // Construction des boutons seulement s'ils ont des liens
+        let buttonsHtml = '';
+        if (projet.Code) {
+            buttonsHtml += `
+                <div id="code" class="btn-project rounded-md w-[100px]" onclick="window.open('${projet.Code}', '_blank')"> 
+                    <p>Code</p>
+                    <img src="assets/icon_design/code.svg" alt="">
+                </div>`;
+        }
+        if (projet.Visiter) {
+            buttonsHtml += `
+                <div id="link" class="btn-project rounded-md w-[100px]" onclick="window.open('${projet.Visiter}', '_blank')"> 
+                    <p>Visiter</p>
+                    <img src="assets/icon_design/rocket.svg" alt="">
+                </div>`;
+        }
+
+        // Construction des technologies seulement si elles existent
+        let technoHtml = '';
+        if (projet.Techno_1 || projet.Techno_2 || projet.Techno_3) {
+            technoHtml = '<div class="flex flex-row justify-start justify-center items-center gap-2"><h3>Techno :</h3>';
+            if (projet.Techno_1) technoHtml += `<img class="h-[30px] w-[30px]" src="${projet.Techno_1}" alt="">`;
+            if (projet.Techno_2) technoHtml += `<img class="h-[30px] w-[30px]" src="${projet.Techno_2}" alt="">`;
+            if (projet.Techno_3) technoHtml += `<img class="h-[30px] w-[30px]" src="${projet.Techno_3}" alt="">`;
+            technoHtml += '</div>';
+        }
+
+        html += `
+            <div class="card-project w-full gap-1"> 
+                <div class="h-full p-4"> 
+                    <div class="card-project-img bg-[url('${projet.Icone}')] bg-cover">
+                        <div class="flex flex-row gap-5">
+                            ${buttonsHtml}
+                        </div>
+                    </div>
+                </div>
+                <div class="h-full p-4"> 
+                    <div class="w-full h-full flex flex-col justify-start gap-2">
+                        <h2>${projet.Titre}</h2>
+                        <p>${projet.Description || ''}</p>
+                        <h3>Compétences clés</h3>
+                        <ul>
+                            ${projet.Compt_1 ? `<li>${projet.Compt_1}</li>` : ''}
+                            ${projet.Compt_2 ? `<li>${projet.Compt_2}</li>` : ''}
+                            ${projet.Compt_3 ? `<li>${projet.Compt_3}</li>` : ''}
+                        </ul>
+                        ${technoHtml}
+                    </div>
+                </div>  
+            </div>
+        `;
+    });
+
+    projetsContainer.innerHTML = html || '<p class="text-center w-full text-gray-400">Aucun projet disponible</p>';
 }
 
 

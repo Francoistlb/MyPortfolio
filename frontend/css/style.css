@@ -55,7 +55,7 @@ body {
  
 .scrolbar::-webkit-scrollbar {
     background-color:  rgba(88, 155, 150);
-    width: 3px;
+    width: 0px;
 }
 
 

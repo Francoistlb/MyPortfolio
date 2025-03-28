@@ -5,6 +5,8 @@ class ModifData {
     private $target_image = "/var/www/html/assets/image/";
     private $target_cv = "/var/www/html/assets/documents/";
     private $target_competence = "/var/www/html/assets/competences/";
+    private $target_technologie = "/var/www/html/assets/technologies/";
+    private $target_projets = "/var/www/html/assets/projets/";
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
@@ -178,7 +180,7 @@ class ModifData {
                     $iconFileType = strtolower(pathinfo($_FILES["icone_competence"]["name"], PATHINFO_EXTENSION));
                     
                     // Simplifier le nom de fichier - utiliser juste le nom de la compétence en minuscules
-                    $icon_filename = strtolower(str_replace(' ', '_', $nom_competence)) . "." . $iconFileType;
+                    $icon_filename = strtolower(str_replace(' ', '', $nom_competence)) . "." . $iconFileType;
                     $target_file = $this->target_competence . $icon_filename;
                     
                     error_log("Tentative de déplacement du fichier vers: " . $target_file);
@@ -203,15 +205,81 @@ class ModifData {
                 }
             }
 
+            if (isset($formData['titre_projet'])) {
+                $data1 = $formData['titre_projet'];
+                $data2 = $formData['description'];
+                $data3 = $formData['compt1'];
+                $data4 = $formData['compt2'];
+                $data5 = $formData['compt3'];
+                $data9 = $formData['visiter'];
+                $data10 = $formData['code'];
+                
+                if (isset($_FILES["icone_projet"]) && $_FILES["icone_projet"]["size"] > 0) {
+                    // Vérifier que le répertoire de projets existe
+                    if (!file_exists($this->target_projets)) {
+                        if (!mkdir($this->target_projets, 0777, true)) {
+                            error_log("Impossible de créer le répertoire cible pour les projets");
+                            return false;
+                        }
+                    }
+
+                    $iconFileType = strtolower(pathinfo($_FILES["icone_projet"]["name"], PATHINFO_EXTENSION));
+                    $icon_filename = strtolower(str_replace(' ', '', $data1)) . "." . $iconFileType;
+                    $target_file = $this->target_projets . $icon_filename;
+                    
+                    if (move_uploaded_file($_FILES["icone_projet"]["tmp_name"], $target_file)) {
+                        $data10 = "/shared-assets/projets/" . $icon_filename;
+                    }
+                }
+
+                if (isset($_FILES["icone_techno1"]) && $_FILES["icone_techno1"]["size"] > 0) {
+                    // Vérifier que le répertoire de projets existe
+                    if (!file_exists($this->target_projets)) {
+                        if (!mkdir($this->target_projets, 0777, true)) {
+                            error_log("Impossible de créer le répertoire cible pour les projets");
+                            return false;
+                        }
+                    }
+                    
+                    $technoFileType = strtolower(pathinfo($_FILES["icone_techno1"]["name"], PATHINFO_EXTENSION));
+                    $techno_filename = strtolower(str_replace(' ', '_', $data1)) . "techno1." . $technoFileType;
+                    $target_file = $this->target_projets . $techno_filename;
+                    
+                    if (move_uploaded_file($_FILES["icone_techno1"]["tmp_name"], $target_file)) {
+                        $data6 = "/shared-assets/projets/" . $techno_filename;
+                    }
+                }
+
+                if (isset($_FILES["icone_techno2"]) && $_FILES["icone_techno2"]["size"] > 0) {
+                    $technoFileType = strtolower(pathinfo($_FILES["icone_techno2"]["name"], PATHINFO_EXTENSION));
+                    $techno_filename = strtolower(str_replace(' ', '_', $data1)) . "techno2." . $technoFileType;
+                    $target_file = $this->target_projets . $techno_filename;
+                    
+                    if (move_uploaded_file($_FILES["icone_techno2"]["tmp_name"], $target_file)) {
+                        $data7 = "/shared-assets/projets/" . $techno_filename;
+                    }
+                }
+
+                if (isset($_FILES["icone_techno3"]) && $_FILES["icone_techno3"]["size"] > 0) {
+                    $technoFileType = strtolower(pathinfo($_FILES["icone_techno3"]["name"], PATHINFO_EXTENSION));
+                    $techno_filename = strtolower(str_replace(' ', '_', $data1)) . "techno3." . $technoFileType;
+                    $target_file = $this->target_projets . $techno_filename;
+                    
+                    if (move_uploaded_file($_FILES["icone_techno3"]["tmp_name"], $target_file)) {
+                        $data8 = "/shared-assets/projets/" . $techno_filename;
+                    }
+                }
+
+                $stmt = $this->pdo->prepare("INSERT INTO Projet (Titre, Description,Icone, Compt_1, Compt_2, Compt_3, Techno_1, Techno_2, Techno_3, Visiter, Code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                return $stmt->execute([$data1,$data2,$data10,$data3,$data4,$data5,$data6,$data7,$data8,$data9,$data10]);
+            }
+
             // Si aucune condition n'a été exécutée
             error_log("Aucun champ reconnu dans les données");
             return false;
 
         } catch (PDOException $e) {
             error_log("Erreur PDO dans updateData: " . $e->getMessage());
-            return false;
-        } catch (Exception $e) {
-            error_log("Exception dans updateData: " . $e->getMessage());
             return false;
         }
     }
