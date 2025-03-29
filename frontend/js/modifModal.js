@@ -152,166 +152,12 @@ function initializeModal() {
                 </form>
             `
         },  
-        competence1: {
-            title: 'Modifier la compétence n°1',
+        competence: {
+            title: 'Modifier la compétence',
             content: `
                 <form class="flex flex-col gap-4" id="modifData" enctype="multipart/form-data">
                     <input type="hidden" name="form_id" value="modifData">
-                    <input type="hidden" name="competence_id" value="1">
-                    <input type="text" placeholder="Nom de la compétence" name="nom_competence" class="p-2 rounded bg-gray-600 text-white" required>
-                    <input type="file" name="icone_competence" class="p-2 rounded bg-gray-600 text-white" accept="image/svg+xml,image/png">
-                    <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
-                        Enregistrer
-                    </button>
-                </form>
-            `
-        },
-        competence2: {
-            title: 'Modifier la compétence n°2',
-            content: `
-                <form class="flex flex-col gap-4" id="modifData" enctype="multipart/form-data">
-                    <input type="hidden" name="form_id" value="modifData">
-                    <input type="hidden" name="competence_id" value="2">
-                    <input type="text" placeholder="Nom de la compétence" name="nom_competence" class="p-2 rounded bg-gray-600 text-white" required>
-                    <input type="file" name="icone_competence" class="p-2 rounded bg-gray-600 text-white" accept="image/svg+xml,image/png">
-                    <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
-                        Enregistrer
-                    </button>
-                </form>
-            `
-        },
-        competence3: {
-            title: 'Modifier la compétence n°3',
-            content: `
-                <form class="flex flex-col gap-4" id="modifData" enctype="multipart/form-data">
-                    <input type="hidden" name="form_id" value="modifData">
-                    <input type="hidden" name="competence_id" value="3">
-                    <input type="text" placeholder="Nom de la compétence" name="nom_competence" class="p-2 rounded bg-gray-600 text-white" required>
-                    <input type="file" name="icone_competence" class="p-2 rounded bg-gray-600 text-white" accept="image/svg+xml,image/png">
-                    <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
-                        Enregistrer
-                    </button>
-                </form>
-            `
-        },
-        competence4: {
-            title: 'Modifier la compétence n°4',
-            content: `
-                <form class="flex flex-col gap-4" id="modifData" enctype="multipart/form-data">
-                    <input type="hidden" name="form_id" value="modifData">
-                    <input type="hidden" name="competence_id" value="4">
-                    <input type="text" placeholder="Nom de la compétence" name="nom_competence" class="p-2 rounded bg-gray-600 text-white" required>
-                    <input type="file" name="icone_competence" class="p-2 rounded bg-gray-600 text-white" accept="image/svg+xml,image/png">
-                    <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
-                        Enregistrer
-                    </button>
-                </form>
-            `
-        },
-        competence5: {
-            title: 'Modifier la compétence n°5',
-            content: `
-                <form class="flex flex-col gap-4" id="modifData" enctype="multipart/form-data">
-                    <input type="hidden" name="form_id" value="modifData">
-                    <input type="hidden" name="competence_id" value="5">
-                    <input type="text" placeholder="Nom de la compétence" name="nom_competence" class="p-2 rounded bg-gray-600 text-white" required>
-                    <input type="file" name="icone_competence" class="p-2 rounded bg-gray-600 text-white" accept="image/svg+xml,image/png">
-                    <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
-                        Enregistrer
-                    </button>
-                </form>
-            `
-        },
-        competence6: {
-            title: 'Modifier la compétence n°6',
-            content: `
-                <form class="flex flex-col gap-4" id="modifData" enctype="multipart/form-data">
-                    <input type="hidden" name="form_id" value="modifData">
-                    <input type="hidden" name="competence_id" value="6">
-                    <input type="text" placeholder="Nom de la compétence" name="nom_competence" class="p-2 rounded bg-gray-600 text-white" required>
-                    <input type="file" name="icone_competence" class="p-2 rounded bg-gray-600 text-white" accept="image/svg+xml,image/png">
-                    <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
-                        Enregistrer
-                    </button>
-                </form>
-            `
-        },
-        competence7: {
-            title: 'Modifier la compétence n°7',
-            content: `
-                <form class="flex flex-col gap-4" id="modifData" enctype="multipart/form-data">
-                    <input type="hidden" name="form_id" value="modifData">
-                    <input type="hidden" name="competence_id" value="7">
-                    <input type="text" placeholder="Nom de la compétence" name="nom_competence" class="p-2 rounded bg-gray-600 text-white" required>
-                    <input type="file" name="icone_competence" class="p-2 rounded bg-gray-600 text-white" accept="image/svg+xml,image/png">
-                    <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
-                        Enregistrer
-                    </button>
-                </form>
-            `
-        },
-        competence8: {
-            title: 'Modifier la compétence n°8',
-            content: `
-                <form class="flex flex-col gap-4" id="modifData" enctype="multipart/form-data">
-                    <input type="hidden" name="form_id" value="modifData">
-                    <input type="hidden" name="competence_id" value="8">
-                    <input type="text" placeholder="Nom de la compétence" name="nom_competence" class="p-2 rounded bg-gray-600 text-white" required>
-                    <input type="file" name="icone_competence" class="p-2 rounded bg-gray-600 text-white" accept="image/svg+xml,image/png">
-                    <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
-                        Enregistrer
-                    </button>
-                </form>
-            `
-        },
-        competence9: {
-            title: 'Modifier la compétence n°9',
-            content: `
-                <form class="flex flex-col gap-4" id="modifData" enctype="multipart/form-data">
-                    <input type="hidden" name="form_id" value="modifData">
-                    <input type="hidden" name="competence_id" value="9">
-                    <input type="text" placeholder="Nom de la compétence" name="nom_competence" class="p-2 rounded bg-gray-600 text-white" required>
-                    <input type="file" name="icone_competence" class="p-2 rounded bg-gray-600 text-white" accept="image/svg+xml,image/png">
-                    <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
-                        Enregistrer
-                    </button>
-                </form>
-            `
-        },
-        competence10: {
-            title: 'Modifier la compétence n°10',
-            content: `
-                <form class="flex flex-col gap-4" id="modifData" enctype="multipart/form-data">
-                    <input type="hidden" name="form_id" value="modifData">
-                    <input type="hidden" name="competence_id" value="10">
-                    <input type="text" placeholder="Nom de la compétence" name="nom_competence" class="p-2 rounded bg-gray-600 text-white" required>
-                    <input type="file" name="icone_competence" class="p-2 rounded bg-gray-600 text-white" accept="image/svg+xml,image/png">
-                    <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
-                        Enregistrer
-                    </button>
-                </form>
-            `
-        },
-        competence11: {
-            title: 'Modifier la compétence n°11',
-            content: `
-                <form class="flex flex-col gap-4" id="modifData" enctype="multipart/form-data">
-                    <input type="hidden" name="form_id" value="modifData">
-                    <input type="hidden" name="competence_id" value="11">
-                    <input type="text" placeholder="Nom de la compétence" name="nom_competence" class="p-2 rounded bg-gray-600 text-white" required>
-                    <input type="file" name="icone_competence" class="p-2 rounded bg-gray-600 text-white" accept="image/svg+xml,image/png">
-                    <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
-                        Enregistrer
-                    </button>
-                </form>
-            `
-        },
-        competence12: {
-            title: 'Modifier la compétence n°12',
-            content: `
-                <form class="flex flex-col gap-4" id="modifData" enctype="multipart/form-data">
-                    <input type="hidden" name="form_id" value="modifData">
-                    <input type="hidden" name="competence_id" value="12">
+                    <input type="hidden" name="competence_id" id="competence_id">
                     <input type="text" placeholder="Nom de la compétence" name="nom_competence" class="p-2 rounded bg-gray-600 text-white" required>
                     <input type="file" name="icone_competence" class="p-2 rounded bg-gray-600 text-white" accept="image/svg+xml,image/png">
                     <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
@@ -422,6 +268,13 @@ function initializeModal() {
             if (config) {
                 modalTitle.textContent = config.title;
                 modalContent.innerHTML = config.content;
+                
+                // Si c'est une compétence, on met à jour l'ID
+                if (type === 'competence') {
+                    const competenceId = event.target.dataset.id;
+                    document.getElementById('competence_id').value = competenceId;
+                }
+                
                 modal.classList.remove('hidden');
             }
         }

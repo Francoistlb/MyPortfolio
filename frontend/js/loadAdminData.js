@@ -27,7 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const experiencesContainer = document.querySelector('.experiencelist');
             const diplomesContainer = document.querySelector('.diplomelist');
             const projetsContainer = document.querySelector('.projetslist');
-            
+            const projetsContainerModif = document.querySelector('.projetslistmodif');
+
             if (experiencesContainer) {
                 experiencesContainer.style.display = 'none';
                 setTimeout(() => { experiencesContainer.style.display = ''; }, 10);
@@ -46,6 +47,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (projetsListContainer) {
                 projetsListContainer.style.display = 'none';
                 setTimeout(() => { projetsListContainer.style.display = ''; }, 10);
+            }
+
+            if (projetsContainerModif) {
+                projetsContainerModif.style.display = 'none';
+                setTimeout(() => { projetsContainerModif.style.display = ''; }, 10);
             }
         }, 500);
     }
@@ -128,6 +134,7 @@ async function loadAdminData() {
             if (data.data.projets) {
                 updateProjets(data.data.projets);
                 updateProjetsList(data.data.projets);
+                updateProjetModif(data.data.projets);
             }
         }
         return true; // Indique que le chargement s'est bien terminé
@@ -312,13 +319,21 @@ function updateCompetences(competences) {
     }
     
     // Remplacer les classes existantes pour une grille fixe
-    competencesContainer.className = 'competenceslist grid grid-cols-4 gap-4 p-2';
+    competencesContainer.className = 'competenceslist grid grid-cols-2 gap-4 p-2';
     
     let html = '';
-    competences.forEach(competence => {
-        html += `<div class="flex justify-center items-center">
+    competences.forEach((competence, index) => {
+        const isRightColumn = index >= competences.length / 2;
+        html += `
+            <div class="flex items-center ${isRightColumn ? 'justify-between' : 'justify-between'}">
+                ${isRightColumn ? `
                     <img class="h-[40px] w-[40px]" src="${competence.Image}" alt="${competence.Nom}" title="${competence.Nom}">
-                </div>`;
+                    <button class="buttonadmin modify-btn" data-type="competence" data-id="${competence.Id}">M</button>
+                ` : `
+                <img class="h-[40px] w-[40px]" src="${competence.Image}" alt="${competence.Nom}" title="${competence.Nom}">    
+                <button class="buttonadmin modify-btn" data-type="competence" data-id="${competence.Id}">M</button>
+                    `}
+            </div>`;
     });
     
     competencesContainer.innerHTML = html || '<p class="text-center w-full text-gray-400">Aucune compétence disponible</p>';
@@ -346,6 +361,30 @@ function updateProjets(projets) {
             </div>
         `;
     });
+
+    projetsContainer.innerHTML = html || '<p class="text-center w-full text-gray-400">Aucun projet disponible</p>';
+}
+
+function updateProjetModif(projets) {
+    const projetsContainer = document.querySelector('.projetslistmodif');
+
+    if (!projetsContainer) {
+        console.error('Container .projetslistmodif non trouvé'); 
+        return;
+    }
+
+    let html = '';
+    projets.forEach(projet => {
+        html += `
+            <div class="card flex justify-between items-center w-full p-2"> 
+                <div class="flex justify-start items-center"> 
+                    <img class="mr-5 h-[20px] w-[20px]" src="${projet.Icone}" alt="${projet.Titre}">
+                    <p><strong>${projet.Titre}</strong></p>
+                </div>
+                <button id="${projet.Id}" class="buttonadmin modify-btn" data-type="projetmodif">Modifier</button>
+            </div>
+        `;
+    });   
 
     projetsContainer.innerHTML = html || '<p class="text-center w-full text-gray-400">Aucun projet disponible</p>';
 }

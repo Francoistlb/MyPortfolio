@@ -212,7 +212,7 @@ class ModifData {
                 $data4 = $formData['compt2'];
                 $data5 = $formData['compt3'];
                 $data9 = $formData['visiter'];
-                $data10 = $formData['code'];
+                $data11 = $formData['code'];
                 
                 if (isset($_FILES["icone_projet"]) && $_FILES["icone_projet"]["size"] > 0) {
                     // Vérifier que le répertoire de projets existe
@@ -271,7 +271,7 @@ class ModifData {
                 }
 
                 $stmt = $this->pdo->prepare("INSERT INTO Projet (Titre, Description,Icone, Compt_1, Compt_2, Compt_3, Techno_1, Techno_2, Techno_3, Visiter, Code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                return $stmt->execute([$data1,$data2,$data10,$data3,$data4,$data5,$data6,$data7,$data8,$data9,$data10]);
+                return $stmt->execute([$data1,$data2,$data10,$data3,$data4,$data5,$data6,$data7,$data8,$data9,$data11]);
             }
 
             // Si aucune condition n'a été exécutée
