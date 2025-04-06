@@ -1,6 +1,6 @@
 <?php
 
-class GetAdminData {
+class GetDataController {
     private $pdo;
 
     public function __construct($pdo) {

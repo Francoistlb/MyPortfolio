@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
 async function loadAdminData() {
     try {
         console.log('Début du chargement des données');
-        const response = await fetch('/index.php?action=getAdminData');
+        const response = await fetch('/index.php?action=getDataController');
         const data = await response.json();
         
         if (data.success) {
@@ -163,7 +163,7 @@ async function loadAdminData() {
             if (data.data.projets) {
                 updateProjets(data.data.projets);
                 updateProjetsList(data.data.projets);
-                updateProjetModif(data.data.projets);
+                updateProjetAdmin(data.data.projets);
             }
             if (data.data.recommandations) {
                 showRecommandation(data.data.recommandations);
@@ -372,12 +372,12 @@ function updateCompetencesAdmin(competences) {
                 ${isRightColumn ? `
                     <img class="h-[40px] w-[40px]" src="${competence.Image}" alt="${competence.Nom}" title="${competence.Nom}">
                     <button class="buttonadmin modify-btn" data-type="competence" data-id="${competence.Id}">
-                        <img src="../assets/icon_design/editer1.svg"  class="h-[20px] w-[20px]">
+                        <img src="../assets/icon_design/editer1.svg"  class="h-[20px] w-[20px] pointer-events-none">
                     </button>
                 ` : `
                     <img class="h-[40px] w-[40px]" src="${competence.Image}" alt="${competence.Nom}" title="${competence.Nom}">    
                     <button class="buttonadmin modify-btn" data-type="competence" data-id="${competence.Id}">
-                        <img src="../assets/icon_design/editer1.svg"  class="h-[20px] w-[20px]">
+                        <img src="../assets/icon_design/editer1.svg"  class="h-[20px] w-[20px] pointer-events-none">
                     </button>
                 `}
             </div>`;
@@ -415,7 +415,7 @@ function updateProjets(projets) {
     projetsContainer.innerHTML = html || '<p class="text-center w-full text-gray-400">Aucun projet disponible</p>';
 }
 
-function updateProjetModif(projets) {
+function updateProjetAdmin(projets) {
     const projetsContainer = document.querySelector('.projetslistmodif');
 
     if (!projetsContainer) {
@@ -432,7 +432,7 @@ function updateProjetModif(projets) {
                     <p><strong>${projet.Titre}</strong></p>
                 </div>
                 <button id="${projet.Id}" class="buttonadmin modify-btn" data-type="projetmodif">
-                   <img src="../assets/icon_design/editer1.svg"  class="h-[20px] w-[20px]">
+                   <img src="../assets/icon_design/editer1.svg"  class="h-[20px] w-[20px] pointer-events-none">
                 </button>
             </div>
         `;

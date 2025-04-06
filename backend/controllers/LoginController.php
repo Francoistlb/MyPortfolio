@@ -1,7 +1,7 @@
 <?php
 // backend/controllers/AuthController.php
 
-class AuthController {
+class LoginController {
 
     private $pdo;
 

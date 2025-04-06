@@ -117,7 +117,7 @@ function initializeModal() {
             content: `  
                 <form class="flex flex-col gap-4" id="modifData">
                     <input type="hidden" name="form_id" value="modifData">  
-                    <textarea placeholder="veille" name="veille" class="p-2 rounded bg-gray-600 text-white h-32" required> </textarea>
+                    <textarea placeholder="veille" name="veille" class="p-2 rounded bg-gray-600 text-white h-60" required> </textarea>
                     <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
                         Enregistrer
                     </button>
@@ -269,13 +269,13 @@ function initializeModal() {
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="titre">
                                 Titre
                             </label>
-                            <input type="text" id="titre" name="titre_projet" placeholder="Titre du projet" class="w-full p-2 rounded bg-gray-600 text-white">
+                            <input type="text" id="titre" name="titre_projet_modif" placeholder="Titre du projet" class="w-full p-2 rounded bg-gray-600 text-white">
                         </div>
                         <div>
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="icone_projet">
                                 Icon
                             </label>
-                            <input type="file" id="icone_projet" name="icone_projet" class="w-full p-2 rounded bg-gray-600 text-white" accept="image/svg+xml,image/png">
+                            <input type="file" id="icone_projet_modif" name="icone_projet_modif" class="w-full p-2 rounded bg-gray-600 text-white" accept="image/svg+xml,image/png">
                         </div>
                     </div>
 
@@ -392,14 +392,14 @@ function initializeModal() {
                         .then(data => {
                             if (data.success) {
                                 const projet = data.data;
-                                // Remplir les champs avec les données existantes
-                                document.getElementById('titre').value = projet.Titre || '';
-                                document.getElementById('description').value = projet.Description || '';
-                                document.getElementById('compt1').value = projet.Compt_1 || '';
-                                document.getElementById('compt2').value = projet.Compt_2 || '';
-                                document.getElementById('compt3').value = projet.Compt_3 || '';
-                                document.getElementById('visiter').value = projet.Visiter || '';
-                                document.getElementById('code').value = projet.Code || '';
+                                // Remplir les champs avec les données existantes, en gérant les valeurs nulles
+                                document.getElementById('titre').value = projet.Titre ?? '';
+                                document.getElementById('description').value = projet.Description ?? '';
+                                document.getElementById('compt1').value = projet.Compt_1 ?? '';
+                                document.getElementById('compt2').value = projet.Compt_2 ?? '';
+                                document.getElementById('compt3').value = projet.Compt_3 ?? '';
+                                document.getElementById('visiter').value = projet.Visiter ?? '';
+                                document.getElementById('code').value = projet.Code ?? '';
                             }
                         })
                         .catch(error => console.error('Erreur lors de la récupération des données du projet:', error));

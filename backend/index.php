@@ -7,10 +7,10 @@ error_reporting(E_ALL);
 
 // Inclure les contrôleurs
 require_once "controllers/DatabaseConnexionController.php";
-require_once "controllers/AuthController.php";
+require_once "controllers/LoginController.php";
 require_once "controllers/SessionKillController.php";
-require_once "controllers/ModifData.php";
-require_once "controllers/GetAdminData.php";
+require_once "controllers/UpdateDataController.php";
+require_once "controllers/GetDataController.php";
 
 // Obtenir l'instance PDO
 $pdo = DatabaseConnexionController::getInstance();
@@ -42,8 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             break;
 
         case 'login':
-            $authController = new AuthController($pdo);
-            $authController->login(
+            $LoginController = new LoginController($pdo);
+            $LoginController->login(
                 $_POST['user_name'] ?? '',
                 $_POST['user_password'] ?? ''
             );
@@ -58,8 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     header('Content-Type: application/json');
                 }
                 
-                $modifDataController = new ModifData($pdo);
-                $result = $modifDataController->updateData($_POST);
+                $UpdateDataControllerController = new UpdateDataController($pdo);
+                $result = $UpdateDataControllerController->updateData($_POST);
                 
                 error_log("Résultat de updateData: " . ($result ? 'true' : 'false'));
                 
@@ -94,9 +94,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    if (isset($_GET['action']) && $_GET['action'] === 'getAdminData') {
-        $getAdminData = new GetAdminData($pdo);
-        $result = $getAdminData->getAllData();
+    if (isset($_GET['action']) && $_GET['action'] === 'getDataController') {
+        $getDataController = new getDataController($pdo);
+        $result = $getDataController->getAllData();
         
         header('Content-Type: application/json');
         echo json_encode($result);
@@ -115,9 +115,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             exit;
         }
         
-        // Assurez-vous que $modifData est une instance de ModifData
-        $modifData = new ModifData($pdo);
-        $result = $modifData->updateData($_POST);
+        // Assurez-vous que $UpdateDataController est une instance de UpdateDataController
+        $UpdateDataController = new UpdateDataController($pdo);
+        $result = $UpdateDataController->updateData($_POST);
         
         // Ajoutez un log pour vérifier si on arrive ici
         error_log("Routage vers updateData via GET - POST: " . print_r($_POST, true));

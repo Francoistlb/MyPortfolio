@@ -1,6 +1,6 @@
 <?php
 
-class ModifData {
+class UpdateDataController {
     private $pdo;
     private $target_image = "/var/www/html/assets/image/";
     private $target_cv = "/var/www/html/assets/documents/";
@@ -37,7 +37,7 @@ class ModifData {
 
     public function updateData($formData) {
         try {
-            error_log("=== Début ModifData::updateData ===");
+            error_log("=== Début DataUpdateController::updateData ===");
             error_log("Données reçues dans updateData: " . print_r($formData, true));
             error_log("Action: " . ($_GET['action'] ?? 'non spécifiée'));
             
@@ -298,6 +298,75 @@ class ModifData {
 
                 $stmt = $this->pdo->prepare("INSERT INTO Projet (Titre, Description,Icone, Compt_1, Compt_2, Compt_3, Techno_1, Techno_2, Techno_3, Visiter, Code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 return $stmt->execute([$data1,$data2,$data10,$data3,$data4,$data5,$data6,$data7,$data8,$data9,$data11]);
+            }
+
+            if (isset($formData['titre_projet_modif'])) {
+                $projetId = $formData['projet_id'];
+                $titre = $formData['titre_projet_modif'];
+                $description = $formData['description'];
+                $compt1 = $formData['compt1'];
+                $compt2 = $formData['compt2'];
+                $compt3 = $formData['compt3'];
+                $visiter = $formData['visiter'];
+                $code = $formData['code'];
+                
+                $updateFields = [];
+                $params = [];
+
+                // Mise à jour de l'icône si fournie
+                if (isset($_FILES["icone_projet_modif"]) && $_FILES["icone_projet_modif"]["size"] > 0) {
+                    if (!file_exists($this->target_projets)) {
+                        mkdir($this->target_projets, 0777, true);
+                    }
+
+                    $iconFileType = strtolower(pathinfo($_FILES["icone_projet_modif"]["name"], PATHINFO_EXTENSION));
+                    $icon_filename = strtolower(str_replace(' ', '', $titre)) . "." . $iconFileType;
+                    $target_file = $this->target_projets . $icon_filename;
+                    
+                    if (move_uploaded_file($_FILES["icone_projet_modif"]["tmp_name"], $target_file)) {
+                        $updateFields[] = "Icone = ?";
+                        $params[] = "/shared-assets/projets/" . $icon_filename;
+                    }
+                }
+
+                // Mise à jour des technologies si fournies
+                $technoFields = ['icone_techno1' => 'Techno_1', 'icone_techno2' => 'Techno_2', 'icone_techno3' => 'Techno_3'];
+                foreach ($technoFields as $fileKey => $dbField) {
+                    if (isset($_FILES[$fileKey]) && $_FILES[$fileKey]["size"] > 0) {
+                        $technoFileType = strtolower(pathinfo($_FILES[$fileKey]["name"], PATHINFO_EXTENSION));
+                        $techno_filename = strtolower(str_replace(' ', '_', $titre)) . $fileKey . "." . $technoFileType;
+                        $target_file = $this->target_projets . $techno_filename;
+                        
+                        if (move_uploaded_file($_FILES[$fileKey]["tmp_name"], $target_file)) {
+                            $updateFields[] = "$dbField = ?";
+                            $params[] = "/shared-assets/projets/" . $techno_filename;
+                        }
+                    }
+                }
+
+                // Ajout des champs texte à mettre à jour
+                $textFields = [
+                    'Titre' => $titre,
+                    'Description' => $description,
+                    'Compt_1' => $compt1,
+                    'Compt_2' => $compt2,
+                    'Compt_3' => $compt3,
+                    'Visiter' => $visiter,
+                    'Code' => $code
+                ];
+
+                foreach ($textFields as $field => $value) {
+                    $updateFields[] = "$field = ?";
+                    $params[] = $value;
+                }
+
+                // Ajouter l'ID du projet pour la clause WHERE
+                $params[] = $projetId;
+
+                // Construire et exécuter la requête
+                $sql = "UPDATE Projet SET " . implode(", ", $updateFields) . " WHERE id = ?";
+                $stmt = $this->pdo->prepare($sql);
+                return $stmt->execute($params);
             }
 
             // Si aucune condition n'a été exécutée
