@@ -256,6 +256,112 @@ function initializeModal() {
                     </button>
                 </form>
             `
+        },
+        projetmodif: {
+            title: 'Modifier le projet',
+            content: `
+                <form class="flex flex-col gap-4" id="modifData" enctype="multipart/form-data">
+                    <input type="hidden" name="form_id" value="modifData">
+                    <input type="hidden" name="projet_id" id="projet_id">
+                    
+                    <div class="mb-1 grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="titre">
+                                Titre
+                            </label>
+                            <input type="text" id="titre" name="titre_projet" placeholder="Titre du projet" class="w-full p-2 rounded bg-gray-600 text-white">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="icone_projet">
+                                Icon
+                            </label>
+                            <input type="file" id="icone_projet" name="icone_projet" class="w-full p-2 rounded bg-gray-600 text-white" accept="image/svg+xml,image/png">
+                        </div>
+                    </div>
+
+                    <div class="mb-1">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
+                            Description
+                        </label>
+                        <textarea id="description" name="description" placeholder="Description du projet" rows="2" class="w-full p-2 rounded bg-gray-600 text-white resize-none"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 mb-1">
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="compt1">
+                                Compétence 1
+                            </label>
+                            <input type="text" id="compt1" name="compt1" placeholder="Première compétence" class="w-full p-2 rounded bg-gray-600 text-white">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="compt2">
+                                Compétence 2
+                            </label>
+                            <input type="text" id="compt2" name="compt2" placeholder="Deuxième compétence" class="w-full p-2 rounded bg-gray-600 text-white">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="compt3">
+                                Compétence 3
+                            </label>
+                            <input type="text" id="compt3" name="compt3" placeholder="Troisième compétence" class="w-full p-2 rounded bg-gray-600 text-white">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 mb-1">
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="icone_techno1">
+                                Technologie 1
+                            </label>
+                            <input type="file" id="icone_techno1" name="icone_techno1" class="w-full p-2 rounded bg-gray-600 text-white" accept="image/svg+xml,image/png">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="icone_techno2">
+                                Technologie 2
+                            </label>
+                            <input type="file" id="icone_techno2" name="icone_techno2" class="w-full p-2 rounded bg-gray-600 text-white" accept="image/svg+xml,image/png">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="icone_techno3">
+                                Technologie 3
+                            </label>
+                            <input type="file" id="icone_techno3" name="icone_techno3" class="w-full p-2 rounded bg-gray-600 text-white" accept="image/svg+xml,image/png">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-1">
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="visiter">
+                                Lien Visiter
+                            </label>
+                            <input type="text" id="visiter" name="visiter" placeholder="Lien vers le projet" class="w-full p-2 rounded bg-gray-600 text-white">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="code">
+                                Lien Code
+                            </label>
+                            <input type="text" id="code" name="code" placeholder="Lien vers le code source" class="w-full p-2 rounded bg-gray-600 text-white">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
+                        Enregistrer les modifications
+                    </button>
+                </form>
+            `
+        },
+        recommandation : {
+            title: 'Ajouter une recommandation',
+            content: `
+                <form class="flex flex-col gap-4" id="modifData" enctype="multipart/form-data">
+                    <input type="hidden" name="form_id" value="modifData">
+                    <input type="text" placeholder="Titre" name="titre_recommandation" class="p-2 rounded bg-gray-600 text-white" required>
+                    <input type="number" name="year" placeholder="Année" class="p-2 rounded bg-gray-600 text-white" required>
+                    <input type="file" name="document" class="p-2 rounded bg-gray-600 text-white" accept="image/png,application/pdf">
+                    <button type="submit" class="visite text-ml text-white px-4 py-2 bg-black rounded-ml transition">
+                        Enregistrer
+                    </button>
+                </form>
+            `
         }
     };
 
@@ -273,6 +379,30 @@ function initializeModal() {
                 if (type === 'competence') {
                     const competenceId = event.target.dataset.id;
                     document.getElementById('competence_id').value = competenceId;
+                }
+                
+                // Si c'est un projet à modifier
+                if (type === 'projetmodif') {
+                    const projetId = event.target.id;
+                    document.getElementById('projet_id').value = projetId;
+                    
+                    // Faire une requête pour obtenir les données du projet
+                    fetch(`/index.php?action=getProjet&id=${projetId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                const projet = data.data;
+                                // Remplir les champs avec les données existantes
+                                document.getElementById('titre').value = projet.Titre || '';
+                                document.getElementById('description').value = projet.Description || '';
+                                document.getElementById('compt1').value = projet.Compt_1 || '';
+                                document.getElementById('compt2').value = projet.Compt_2 || '';
+                                document.getElementById('compt3').value = projet.Compt_3 || '';
+                                document.getElementById('visiter').value = projet.Visiter || '';
+                                document.getElementById('code').value = projet.Code || '';
+                            }
+                        })
+                        .catch(error => console.error('Erreur lors de la récupération des données du projet:', error));
                 }
                 
                 modal.classList.remove('hidden');

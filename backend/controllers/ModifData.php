@@ -7,6 +7,7 @@ class ModifData {
     private $target_competence = "/var/www/html/assets/competences/";
     private $target_technologie = "/var/www/html/assets/technologies/";
     private $target_projets = "/var/www/html/assets/projets/";
+    private $target_recommandation = "/var/www/html/assets/recommandations/";
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
@@ -137,6 +138,31 @@ class ModifData {
                 $data = $formData['veille'];
                 $stmt = $this->pdo->prepare("UPDATE Information SET Veille = ? WHERE id = 1");
                 return $stmt->execute([$data]);
+            }
+
+            if (isset($formData['titre_recommandation']) && isset($_FILES['document']) && isset($formData['year'])) {
+                $data = $formData['titre_recommandation'];
+                $year = $formData['year'];
+                
+                // Vérifier que le répertoire existe
+                if (!file_exists($this->target_recommandation)) {
+                    if (!mkdir($this->target_recommandation, 0777, true)) {
+                        error_log("Impossible de créer le répertoire pour les recommandations");
+                        return false;
+                    }
+                }
+
+                $target_file = $this->target_recommandation . $_FILES['document']['name'];
+
+                if (move_uploaded_file($_FILES['document']['tmp_name'], $target_file)) {
+                    // Chemin pour la base de données
+                    $document_path = "/shared-assets/recommandations/" . $_FILES['document']['name'];
+                    
+                    $stmt = $this->pdo->prepare("INSERT INTO Recommandation (Titre, Url, Annee) VALUES (?, ?, ?)");
+                    return $stmt->execute([$data, $document_path, $year]);
+                }
+                error_log("Échec du téléchargement du document de recommandation");
+                return false;
             }
 
             if (isset($formData['titre_diplome']) && isset($formData['periode_diplome']) && isset($formData['ecole_diplome'])) 

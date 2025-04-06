@@ -84,7 +84,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     // Charger les données
                     loadAdminData().then(() => {
-                        // Reconnecter l'observateur après le chargement
+                        // Une fois les données chargées, vérifier si nous devons défiler vers un projet
+                        const scrollToId = sessionStorage.getItem('scrollToProject');
+                        if (scrollToId && containers.listprojets) {
+                            setTimeout(() => {
+                                const element = document.getElementById(scrollToId);
+                                if (element) {
+                                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                    sessionStorage.removeItem('scrollToProject');
+                                }
+                            }, 500);
+                        }
+                        
+                        // Reconnecter l'observateur
                         const dynamicContent = document.getElementById('dynamic-content');
                         if (dynamicContent) {
                             observer.observe(dynamicContent, { childList: true, subtree: true });
@@ -99,6 +111,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const dynamicContent = document.getElementById('dynamic-content');
     if (dynamicContent) {
         observer.observe(dynamicContent, { childList: true, subtree: true });
+    }
+
+    // Vérifier si nous sommes sur la page des projets
+    if (window.location.pathname.includes('projects.html')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const scrollToId = urlParams.get('scrollTo');
+        
+        if (scrollToId) {
+            // Attendre que les projets soient chargés
+            const checkElement = setInterval(() => {
+                const element = document.getElementById(scrollToId);
+                if (element) {
+                    clearInterval(checkElement);
+                    setTimeout(() => {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 500); // Délai pour laisser le temps au contenu de se charger complètement
+                }
+            }, 100);
+        }
     }
 });
 
@@ -119,22 +150,23 @@ async function loadAdminData() {
                 updateTelephone(data.data.informations);
                 updateEmail(data.data.informations);
             }
-            // Remplir les diplômes
             if (data.data.diplomes) {
                 updateDiplomes(data.data.diplomes);
             }
-            // Remplir les expériences
             if (data.data.experiences) {
                 updateExperiences(data.data.experiences);
             }
-
             if (data.data.competences) {
                 updateCompetences(data.data.competences);
+                updateCompetencesAdmin(data.data.competences);
             }
             if (data.data.projets) {
                 updateProjets(data.data.projets);
                 updateProjetsList(data.data.projets);
                 updateProjetModif(data.data.projets);
+            }
+            if (data.data.recommandations) {
+                showRecommandation(data.data.recommandations);
             }
         }
         return true; // Indique que le chargement s'est bien terminé
@@ -242,13 +274,10 @@ function updateDiplomes(diplomes) {
 
     const html = diplomes.map(diplome => `
         <div class="rounded-md flex items-stretch py-3">
-            <div class="flex flex-col w-[15%] justify-center items-center"> 
-                <div class="h-1/3">
-                    <div class="bg-black h-full w-1"></div>
-                </div>
-                <img class="h-max-1/3 w-max-7" src="../assets/icon_design/row.svg">
-                <div class="h-1/3 flex justify-center items-center">
-                    <div class="bg-black h-full w-1"></div>
+            <div class="w-[15%] relative">
+                <div class="absolute top-0 bottom-0 left-1/2 w-[3px] -translate-x-1/2 bg-black"></div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <img class="h-[40px] w-[40px]" src="../assets/icon_design/row.svg"> 
                 </div>
             </div>
             <div class="list w-[85%] p-2">
@@ -257,15 +286,11 @@ function updateDiplomes(diplomes) {
                 <p class="exp-text">${diplome.Ecole || ''}</p>
             </div>
         </div>
-        <div class="rounded-md flex items-stretch">
-                <div class="flex flex-col w-[15%] justify-center items-center "> 
-                    <div class="h-3"> 
-                        <div class="bg-black h-full w-1"></div>
-                    </div>
-                </div>
-                <div class="w-[85%]"></div>
-            </div>
-    `).join('');
+        
+    `).join('')+ `
+    <div class="flex justify-center">
+        <div class="w-1/2 h-[4px] rounded" style="background-color: rgb(53, 129, 123);"></div>
+    </div>`;
 
     diplomesContainer.innerHTML = html;
 }
@@ -278,40 +303,58 @@ function updateExperiences(experiences) {
         return;
     }
 
-    const html = experiences.map(experience => `
-        <div class="rounded-md flex items-stretch">
-            <div class="flex flex-col w-[15%] justify-center items-center"> 
-                <div class="h-1/3">
-                    <div class="bg-black h-full w-1"></div>
-                </div>
-                <img class="h-max-1/3 w-max-7" src="../assets/icon_design/row.svg"> 
-                <div class="h-1/3 flex justify-center items-center">
-                    <div class="bg-black h-full w-1"></div>
+    // Trier les expériences par ID décroissant
+    const sortedExperiences = [...experiences].sort((a, b) => b.Id - a.Id);
+
+    const html = sortedExperiences.map(experience => `
+        <div class="rounded-md flex relative">
+            <div class="w-[15%] relative">
+                <div class="absolute top-0 bottom-0 left-1/2 w-[3px] -translate-x-1/2 bg-black"></div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <img class="h-[40px] w-[40px]" src="../assets/icon_design/row.svg"> 
                 </div>
             </div>
-            <div class="list w-[85%] p-2">
-                <p class="exp-title">${experience.Titre || ''}</p>
-                <p class="exp-text">${experience.Periode || ''}</p>
-                <p class="exp-text">${experience.Entreprise || ''}</p>
+            <div class="w-[85%] py-1">
+                <div class="list p-2">
+                    <p class="exp-title">${experience.Titre || ''}</p>
+                    <p class="exp-text">${experience.Periode || ''}</p>
+                    <p class="exp-text">${experience.Entreprise || ''}</p>
+                </div>
             </div>
         </div>
-        
-        <!-- Séparateur entre les expériences -->
-        <div class="rounded-md flex items-stretch">
-            <div class="flex flex-col w-[15%] justify-center items-center"> 
-                <div class="h-3"> 
-                    <div class="bg-black h-full w-1"></div>
-                </div>
-            </div>
-            <div class="w-[85%]"></div>
-        </div>
-    `).join('');
+    `).join('') + `
+    <div class="flex justify-center mt-2">
+        <div class="w-1/2 h-[4px] rounded" style="background-color: rgb(53, 129, 123);"></div>
+    </div>`;
 
     experiencesContainer.innerHTML = html;
 }
 
 function updateCompetences(competences) {
     const competencesContainer = document.querySelector('.competenceslist');
+    
+    if (!competencesContainer) {
+        console.error('Container des compétences non trouvé');
+        return;
+    }
+    
+    // Remplacer les classes existantes pour une grille fixe
+    competencesContainer.className = 'competenceslist grid grid-cols-4 gap-4 p-2';
+    
+    let html = '';
+    console.log(`Nombre de compétences: ${competences.length}`);
+    
+    competences.forEach(competence => {
+        html += `<div class="flex justify-center items-center">
+                    <img class="h-[40px] w-[40px]" src="${competence.Image}" alt="${competence.Nom}" title="${competence.Nom}">
+                </div>`;
+    });
+    
+    competencesContainer.innerHTML = html || '<p class="text-center w-full text-gray-400">Aucune compétence disponible</p>';
+}
+
+function updateCompetencesAdmin(competences) {
+    const competencesContainer = document.querySelector('.competenceslistadmin');
     
     if (!competencesContainer) {
         console.error('Container des compétences non trouvé');
@@ -328,11 +371,15 @@ function updateCompetences(competences) {
             <div class="flex items-center ${isRightColumn ? 'justify-between' : 'justify-between'}">
                 ${isRightColumn ? `
                     <img class="h-[40px] w-[40px]" src="${competence.Image}" alt="${competence.Nom}" title="${competence.Nom}">
-                    <button class="buttonadmin modify-btn" data-type="competence" data-id="${competence.Id}">M</button>
+                    <button class="buttonadmin modify-btn" data-type="competence" data-id="${competence.Id}">
+                        <img src="../assets/icon_design/editer1.svg"  class="h-[20px] w-[20px]">
+                    </button>
                 ` : `
-                <img class="h-[40px] w-[40px]" src="${competence.Image}" alt="${competence.Nom}" title="${competence.Nom}">    
-                <button class="buttonadmin modify-btn" data-type="competence" data-id="${competence.Id}">M</button>
-                    `}
+                    <img class="h-[40px] w-[40px]" src="${competence.Image}" alt="${competence.Nom}" title="${competence.Nom}">    
+                    <button class="buttonadmin modify-btn" data-type="competence" data-id="${competence.Id}">
+                        <img src="../assets/icon_design/editer1.svg"  class="h-[20px] w-[20px]">
+                    </button>
+                `}
             </div>`;
     });
     
@@ -351,13 +398,16 @@ function updateProjets(projets) {
     console.log(`Nombre de projets: ${projets.length}`);
 
     projets.forEach(projet => {
+        console.log('Création du bouton pour le projet:', projet.Id);
         html += `
             <div class="card flex justify-between items-center w-full p-2"> 
                 <div class="flex justify-start items-center"> 
                     <img class="mr-5 h-[20px] w-[20px]" src="${projet.Icone}" alt="${projet.Titre}">
                     <p><strong>${projet.Titre}</strong></p>
                 </div>
-                <img src="assets/icon_design/fleche.svg" alt="">
+                <button onclick="goToProject('projet-${projet.Id}')" class="hover:scale-110 transition-transform">
+                    <img src="assets/icon_design/fleche.svg" alt="Voir le projet" class="h-[15px] w-[15px]">
+                </button>
             </div>
         `;
     });
@@ -381,7 +431,9 @@ function updateProjetModif(projets) {
                     <img class="mr-5 h-[20px] w-[20px]" src="${projet.Icone}" alt="${projet.Titre}">
                     <p><strong>${projet.Titre}</strong></p>
                 </div>
-                <button id="${projet.Id}" class="buttonadmin modify-btn" data-type="projetmodif">Modifier</button>
+                <button id="${projet.Id}" class="buttonadmin modify-btn" data-type="projetmodif">
+                   <img src="../assets/icon_design/editer1.svg"  class="h-[20px] w-[20px]">
+                </button>
             </div>
         `;
     });   
@@ -399,6 +451,7 @@ function updateProjetsList(projets) {
 
     let html = '';
     projets.forEach(projet => {
+        console.log('Création de la carte détaillée pour le projet:', projet.Id);
         // Construction des boutons seulement s'ils ont des liens
         let buttonsHtml = '';
         if (projet.Code) {
@@ -427,7 +480,7 @@ function updateProjetsList(projets) {
         }
 
         html += `
-            <div class="card-project w-full gap-1"> 
+            <div id="projet-${projet.Id}" class="card-project w-full gap-1"> 
                 <div class="h-full p-4"> 
                     <div class="card-project-img bg-[url('${projet.Icone}')] bg-cover">
                         <div class="flex flex-row gap-5">
@@ -455,4 +508,151 @@ function updateProjetsList(projets) {
     projetsContainer.innerHTML = html || '<p class="text-center w-full text-gray-400">Aucun projet disponible</p>';
 }
 
+function showRecommandation(recommandations) {
+    let currentIndex = 0;
 
+    const modal = document.createElement('div');
+    modal.id = 'modal-recom';
+    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50';
+    modal.innerHTML = `
+        <div class="bg-gray-800 rounded-lg w-[80%] max-w-4xl relative">
+            <div class="flex justify-between items-center p-4 border-b border-gray-600">
+                <h2 class="text-2xl font-bold text-white">Recommandations</h2>
+                <button id="close-modal-recom" class="text-white hover:text-gray-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="recom-content" class="p-4">
+                <div class="p-2 rounded bg-gray-600">
+                    <iframe src="${recommandations[0]?.Url}" class="w-full h-[400px]" frameborder="0"></iframe>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center p-4 border-t border-gray-600">
+                <button id="prev-recom" class="flex items-center gap-2 bg-black text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                    <img src="assets/icon_design/fleche.svg" class="h-[20px] w-[20px] transform rotate-180" alt="Précédent">
+                </button>
+                <p id="recom-date" class="text-white text-lg font-semibold"></p>
+                <button id="next-recom" class="flex items-center gap-2 bg-black text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                    <img src="assets/icon_design/fleche.svg" class="h-[20px] w-[20px]" alt="Suivant">
+                </button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+
+    // Fonction pour mettre à jour l'image affichée
+    function updateRecommandation() {
+        const content = document.getElementById('recom-content');
+        const dateElement = document.getElementById('recom-date');
+        content.innerHTML = `
+            <div class="p-2 rounded bg-gray-600">
+                <iframe src="${recommandations[currentIndex]?.Url}" class="w-full h-[400px]" frameborder="0"></iframe>
+            </div>
+        `;
+
+        // date
+        const annee = recommandations[currentIndex]?.Annee || '';
+        dateElement.textContent = annee ? `${annee}` : '';
+
+        // Mettre à jour l'état des boutons
+        const prevBtn = document.getElementById('prev-recom');
+        const nextBtn = document.getElementById('next-recom');
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === recommandations.length - 1;
+    }
+
+    // Initialiser avec la première recommandation
+    updateRecommandation();
+
+    // Ajouter les événements de navigation
+    document.getElementById('prev-recom').addEventListener('click', () => {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateRecommandation();
+        }
+    });
+
+    document.getElementById('next-recom').addEventListener('click', () => {
+        if (currentIndex < recommandations.length - 1) {
+            currentIndex++;
+            updateRecommandation();
+        }
+    });
+
+    // Ajouter l'événement de clic sur la div recommandation
+    const recommandationDiv = document.getElementById('recommandation');
+    if (recommandationDiv) {
+        recommandationDiv.addEventListener('click', () => {
+            currentIndex = 0;
+            updateRecommandation();
+            modal.classList.remove('hidden');
+        });
+    }
+
+    // Fermer le modal
+    document.getElementById('close-modal-recom').addEventListener('click', () => {
+        modal.classList.add('hidden');
+    });
+
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) modal.classList.add('hidden');
+    });
+}
+
+// Fonction pour rediriger vers la page des projets avec l'ID du projet
+window.goToProject = function(projectId) {
+    console.log('goToProject appelé avec ID:', projectId);
+    
+    // Sauvegarder l'ID du projet dans le sessionStorage
+    sessionStorage.setItem('scrollToProject', projectId);
+    console.log('ID sauvegardé dans sessionStorage:', sessionStorage.getItem('scrollToProject'));
+    
+    // Simuler un clic sur la div projects
+    const projectsDiv = document.getElementById('projects');
+    if (projectsDiv) {
+        console.log('Div projects trouvée, simulation du clic');
+        projectsDiv.click();
+        
+        // Vérifier périodiquement si le container des projets est chargé
+        const checkProjectsLoaded = setInterval(() => {
+            const projectsContainer = document.querySelector('.listprojets');
+            if (projectsContainer) {
+                console.log('Container des projets trouvé');
+                clearInterval(checkProjectsLoaded);
+                
+                // Attendre un peu que les projets soient rendus
+                setTimeout(() => {
+                    console.log('Recherche de l\'élément avec ID:', projectId);
+                    const element = document.getElementById(projectId);
+                    if (element) {
+                        console.log('Élément trouvé, défilement en cours');
+                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        sessionStorage.removeItem('scrollToProject');
+                    } else {
+                        console.log('Élément non trouvé dans le DOM');
+                    }
+                }, 1000); // Augmenté le délai à 1 seconde pour s'assurer que tout est chargé
+            }
+        }, 100);
+    } else {
+        console.error('Div projects non trouvée');
+        // Essayer avec le bouton menu-projects comme fallback
+        const menuProjectsButton = document.getElementById('menu-projects');
+        if (menuProjectsButton) {
+            console.log('Bouton menu-projects trouvé comme fallback, simulation du clic');
+            menuProjectsButton.click();
+        }
+    }
+};
+
+// Ajouter la fonction de défilement au scope global
+window.scrollToProject = function(projectId) {
+    const projectElement = document.getElementById(projectId);
+    if (projectElement) {
+        projectElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+};

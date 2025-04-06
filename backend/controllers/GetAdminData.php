@@ -34,6 +34,11 @@ class GetAdminData {
             $competencesStmt = $this->pdo->query($competencesQuery);
             $competences = $competencesStmt->fetchAll(PDO::FETCH_ASSOC);
 
+            // Récupérer les recommandations
+            $recommandationsQuery = "SELECT * FROM Recommandation";
+            $recommandationsStmt = $this->pdo->query($recommandationsQuery);
+            $recommandations = $recommandationsStmt->fetchAll(PDO::FETCH_ASSOC);
+
             // Structurer les données
             return [
                 'success' => true,
@@ -43,6 +48,7 @@ class GetAdminData {
                     'experiences' => $experiences,
                     'projets' => $projets,
                     'competences' => $competences,
+                    'recommandations' => $recommandations
                 ]
             ];
 
